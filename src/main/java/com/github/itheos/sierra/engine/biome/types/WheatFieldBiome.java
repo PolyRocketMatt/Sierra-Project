@@ -1,16 +1,15 @@
 package com.github.itheos.sierra.engine.biome.types;
 
 import com.github.itheos.sierra.assets.PlaceableAsset;
-import com.github.itheos.sierra.assets.SierraAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.biome.BiomeManager;
 import com.github.itheos.sierra.engine.biome.SierraBiome;
+import com.github.itheos.sierra.engine.generator.ProceduralRock;
 import com.github.itheos.sierra.engine.generator.biome.WheatFieldGenerator;
 import com.github.itheos.sierra.utils.MathUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.data.Ageable;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.Random;
@@ -98,6 +97,21 @@ public class WheatFieldBiome extends SierraBiome {
 
                     data.setBlock(x + oX, y + oY, z + oZ, assetData.getMaterial());
                     data.setBlock(oX, oY, oZ, Bukkit.createBlockData(assetData.getData()));
+                }
+            }
+        } else if (random.nextInt(10000) >= 9900) {
+            int size = random.nextInt(5);
+
+            if (x > 1 && z > 1 && x + size < 15 && z + size < 15) {
+                int[][][] rock = ProceduralRock.generate(size, 5.0f);
+
+                for (int i = 0; i < size; i++) {
+                    for (int j = 0; j < size; j++) {
+                        for (int k = 0; k < size; k++) {
+                            if (rock[i][j][k] == 1)
+                                data.setBlock(x + i, y + j, z + k, Material.STONE);
+                        }
+                    }
                 }
             }
         }

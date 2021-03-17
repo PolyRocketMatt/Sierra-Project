@@ -17,7 +17,7 @@ public enum Setting {
 
     BIOME_WF_MULTIPLIER(new KeyValuePair<>("generators.biome.wheat-field.multiplier", 8)),
     BIOME_WF_OCTAVES(new KeyValuePair<>("generators.biome.wheat-field.octaves", 4)),
-    BIOME_WF_SCALE(new KeyValuePair<>("generators.biome.wheat-field.scale", 250.0f)),
+    BIOME_WF_SCALE(new KeyValuePair<>("generators.biome.wheat-field.scale", 150.0f)),
     BIOME_WF_PERSISTENCE(new KeyValuePair<>("generators.biome.wheat-field.persistence", 0.5f)),
     BIOME_WF_LACUNARITY(new KeyValuePair<>("generators.biome.wheat-field.lacunarity", 1.95f)),
     BIOME_WF_STRAIGHT_INFLUENCE(new KeyValuePair<>("generators.biome.wheat-field.s-influence", 0.25f)),
