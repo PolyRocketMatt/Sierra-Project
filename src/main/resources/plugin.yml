@@ -1,0 +1,21 @@
+name: Sierra
+main: com.github.itheos.sierra.Sierra
+version: 0.0.1
+api-version: 1.16
+description: Next gen terrain generation for Minecraft
+authors:
+  - Maarten Magits
+  - Matthias Kovacic
+  - Lode Keppens
+load: STARTUP
+database: true
+softdepend:
+  - Multiverse-Core
+default-permission: not op
+commands:
+  sierra:
+    description: Type this command to get help
+permissions:
+  sierra.admin:
+    description: Admin permission
+    default: op
