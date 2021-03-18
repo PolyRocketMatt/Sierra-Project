@@ -28,6 +28,10 @@ public class MathUtils {
         return seed / intSeed() + intSeed() / intSeed();
     }
 
+    public static int fromSeedVolatile(int seed) { return seed % (seed / 10) * (seed % 2); }
+
+    public static int fromDoubleSeed(int s1, int s2) { return (s1 + s2) / (s1 % s2); }
+
     /**
      * SmoothStep function on value t using fifth-degree polynomial.
      *

@@ -2,9 +2,9 @@ package com.github.itheos.sierra.engine.biome.types;
 
 import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
-import com.github.itheos.sierra.engine.biome.BiomeManager;
+import com.github.itheos.sierra.engine.biome.BiomeController;
 import com.github.itheos.sierra.engine.biome.SierraBiome;
-import com.github.itheos.sierra.engine.generator.ProceduralRock;
+import com.github.itheos.sierra.engine.generator.general.ProceduralRock;
 import com.github.itheos.sierra.engine.generator.biome.WheatFieldGenerator;
 import com.github.itheos.sierra.utils.MathUtils;
 import org.bukkit.Bukkit;
@@ -24,7 +24,7 @@ public class WheatFieldBiome extends SierraBiome {
     private WheatFieldGenerator generator;
 
     public WheatFieldBiome(SierraWorld world) {
-        super(world, BiomeManager.Biomes.WHEAT_FIELDS);
+        super(world, BiomeController.Biomes.WHEAT_FIELDS);
 
         this.random = new Random();
         this.generator = new WheatFieldGenerator(world.getConfig().<Integer>get("worlds." + world.getName() + ".seeds.biome.wheat-fields"));

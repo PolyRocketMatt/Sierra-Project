@@ -6,7 +6,7 @@ import org.bukkit.block.Biome;
  * Created by PolyRocketMatt on 12/03/2021.
  */
 
-public class BiomeManager {
+public class BiomeController {
 
     /**
      * A list of all biomes in Sierra and their respective

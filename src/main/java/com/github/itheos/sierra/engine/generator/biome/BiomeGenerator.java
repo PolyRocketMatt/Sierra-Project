@@ -1,4 +1,6 @@
-package com.github.itheos.sierra.engine.generator;
+package com.github.itheos.sierra.engine.generator.biome;
+
+import com.github.itheos.sierra.engine.generator.NoiseGenerator;
 
 /**
  * Created by PolyRocketMatt on 13/03/2021.

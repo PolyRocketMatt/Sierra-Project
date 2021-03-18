@@ -1,6 +1,6 @@
 package com.github.itheos.sierra.assets;
 
-import com.github.itheos.sierra.engine.biome.BiomeManager;
+import com.github.itheos.sierra.engine.biome.BiomeController;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.List;
 public class PlaceableAsset {
 
     private String name;
-    private List<BiomeManager.Biomes> biomes;
+    private List<BiomeController.Biomes> biomes;
     private List<AssetData> data;
 
     public PlaceableAsset(SierraAsset asset) {
@@ -24,7 +24,7 @@ public class PlaceableAsset {
 
         String[] stringBiomes = asset.getBiomes().substring(1, asset.getBiomes().length() - 1).split(",");
         Arrays.stream(stringBiomes).forEach(biome -> {
-            BiomeManager.Biomes translated = BiomeManager.Biomes.getBiome(biome.trim());
+            BiomeController.Biomes translated = BiomeController.Biomes.getBiome(biome.trim());
 
             if (translated != null) {
                 biomes.add(translated);
@@ -40,7 +40,7 @@ public class PlaceableAsset {
         return name;
     }
 
-    public List<BiomeManager.Biomes> getBiomes() {
+    public List<BiomeController.Biomes> getBiomes() {
         return biomes;
     }
 

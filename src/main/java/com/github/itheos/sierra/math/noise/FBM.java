@@ -63,8 +63,23 @@ public class FBM {
         this.frequency = frequency;
     }
 
-    public int getOctaves() {
-        return octaves;
+    public static float compute(Noise noise, NoiseFilter filter, int octaves, Function<Float> scale, Function<Float> persistence, Function<Float> lacunarity,
+                                Function<Float> amplitude, Function<Float> frequency, float x, float z) {
+        float amp = amplitude.call();
+        float freq = frequency.call();
+        float value = 0.0f;
+
+        for (int i = 0; i < octaves; i++) {
+            float sc = scale.call(value);
+            float sX = x / sc * freq;
+            float sZ = z / sc * freq;
+
+            value += filter.function.call(noise.evaluate(sX, sZ)[0]) * amp;
+            amp *= persistence.call(value);
+            freq *= lacunarity.call(value);
+        }
+
+        return value;
     }
 
     /**
@@ -80,13 +95,13 @@ public class FBM {
         float value = 0.0f;
 
         for (int i = 0; i < octaves; i++) {
-            float sc = scale.call();
+            float sc = scale.call(value);
             float sX = x / sc * freq;
             float sZ = z / sc * freq;
 
             value += filter.function.call(noise.evaluate(sX, sZ)[0]) * amp;
-            amp *= persistence.call();
-            freq *= lacunarity.call();
+            amp *= persistence.call(value);
+            freq *= lacunarity.call(value);
         }
 
         return value;
@@ -118,7 +133,7 @@ public class FBM {
 
         for (int i = 0; i < octaves; i++) {
             max += 1.0f * amp;
-            amp *= persistence.call();
+            amp *= persistence.call(max);
         }
 
         return max;

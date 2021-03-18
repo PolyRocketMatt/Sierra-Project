@@ -3,7 +3,7 @@ package com.github.itheos.sierra.engine.biome;
 import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
-import com.github.itheos.sierra.engine.generator.BiomeGenerator;
+import com.github.itheos.sierra.engine.generator.biome.BiomeGenerator;
 import com.github.itheos.sierra.handlers.AssetHandler;
 import org.bukkit.generator.ChunkGenerator;
 
@@ -17,11 +17,11 @@ import java.util.Objects;
 public abstract class SierraBiome {
 
     protected SierraWorld world;
-    protected BiomeManager.Biomes biome;
+    protected BiomeController.Biomes biome;
     protected AssetHandler handler;
     protected ArrayList<PlaceableAsset> assets;
 
-    public SierraBiome(SierraWorld world, BiomeManager.Biomes biome) {
+    public SierraBiome(SierraWorld world, BiomeController.Biomes biome) {
         this.world = world;
         this.biome = biome;
         this.handler = Objects.requireNonNull(Sierra.getHandlerManager().<AssetHandler>getAsPredefined("AssetHandler"));
@@ -47,7 +47,7 @@ public abstract class SierraBiome {
      *
      * @return the biome
      */
-    public BiomeManager.Biomes getBiome() {
+    public BiomeController.Biomes getBiome() {
         return biome;
     }
 

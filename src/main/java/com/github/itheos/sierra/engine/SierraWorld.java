@@ -3,7 +3,7 @@ package com.github.itheos.sierra.engine;
 import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.SierraConfiguration;
 import com.github.itheos.sierra.engine.biome.types.WheatFieldBiome;
-import com.github.itheos.sierra.engine.generator.BaseGenerator;
+import com.github.itheos.sierra.engine.generator.general.BaseGenerator;
 
 /**
  * Created by PolyRocketMatt on 12/03/2021.

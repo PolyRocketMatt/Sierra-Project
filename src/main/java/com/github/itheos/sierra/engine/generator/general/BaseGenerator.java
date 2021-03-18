@@ -1,6 +1,7 @@
-package com.github.itheos.sierra.engine.generator;
+package com.github.itheos.sierra.engine.generator.general;
 
 import com.github.itheos.sierra.Sierra;
+import com.github.itheos.sierra.engine.generator.NoiseGenerator;
 import com.github.itheos.sierra.math.noise.FBM;
 import com.github.itheos.sierra.math.noise.SimplexNoise;
 import com.github.itheos.sierra.utils.MathUtils;
