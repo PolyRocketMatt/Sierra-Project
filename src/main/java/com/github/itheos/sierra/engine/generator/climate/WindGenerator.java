@@ -21,11 +21,11 @@ public class WindGenerator extends ClimateGenerator {
     public WindGenerator(int seed, int directional, int offset) {
         this.directional = MathUtils.fromDoubleSeed(seed, directional);
         this.offset = offset;
-        this.octaves = Sierra.getGenerators().<Integer>get("generators.climate.wind.octaves");
-        this.scale = Sierra.getGenerators().<Float>get("generators.climate.wind.scale");
-        this.persistence = Sierra.getGenerators().<Float>get("generators.climate.wind.persistence");
-        this.lacunarity = Sierra.getGenerators().<Float>get("generators.climate.wind.lacunarity");
-        this.warp = Sierra.getGenerators().<Float>get("generators.climate.wind.warp");
+        this.octaves = Sierra.getGenerators().getAsInteger("generators.climate.wind.octaves");
+        this.scale = Sierra.getGenerators().getAsFloat("generators.climate.wind.scale");
+        this.persistence = Sierra.getGenerators().getAsFloat("generators.climate.wind.persistence");
+        this.lacunarity = Sierra.getGenerators().getAsFloat("generators.climate.wind.lacunarity");
+        this.warp = Sierra.getGenerators().getAsFloat("generators.climate.wind.warp");
         this.max = trueMax(octaves);
 
         noise = new SimplexNoise(seed);

@@ -15,6 +15,12 @@ public enum Setting {
     BASE_PERSISTENCE(new KeyValuePair<>("generators.base.persistence", 0.5f)),
     BASE_LACUNARITY(new KeyValuePair<>("generators.base.lacunarity", 1.95f)),
 
+    SIMPLEX_OCTAVES(new KeyValuePair<>("generators.simplex.octaves", 8)),
+    SIMPLEX_SCALE(new KeyValuePair<>("generators.simplex.octaves", 5000.0f)),
+    SIMPLEX_PERSISTENCE(new KeyValuePair<>("generators.simplex.octaves", 0.5)),
+    SIMPLEX_LACUNARITY(new KeyValuePair<>("generators.simplex.octaves", 1.95)),
+
+    //  Biome Generation Settings
     BIOME_WF_MULTIPLIER(new KeyValuePair<>("generators.biome.wheat-field.multiplier", 8)),
     BIOME_WF_OCTAVES(new KeyValuePair<>("generators.biome.wheat-field.octaves", 4)),
     BIOME_WF_SCALE(new KeyValuePair<>("generators.biome.wheat-field.scale", 150.0f)),

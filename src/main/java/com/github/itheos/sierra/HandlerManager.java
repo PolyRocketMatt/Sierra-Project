@@ -1,7 +1,7 @@
 package com.github.itheos.sierra;
 
 import com.github.itheos.sierra.exception.HandlerException;
-import com.github.itheos.sierra.handlers.Handler;
+import com.github.itheos.sierra.handlers.*;
 import com.github.itheos.sierra.handlers.handles.Handle;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by PolyRocketMatt on 11/03/2021.
@@ -116,5 +117,24 @@ public class HandlerManager implements Loggable {
                 "Total Handlers > " + handlers.size(),
                 "Handles > " + handles.size()
         );
+    }
+
+    //  Default handlers
+    public AssetHandler getAssetHandler() {
+        return Objects.requireNonNull(getAsPredefined("AssetHandler"));
+    }
+
+    public EngineHandler getEngineHandler() {
+        return Objects.requireNonNull(getAsPredefined("EngineHandler"));
+    }
+
+    public GeneratorHandler getGeneratorHandler() { return Objects.requireNonNull(getAsPredefined("GeneratorHandler")); }
+
+    public GuiHandler getGuiHandler() {
+        return Objects.requireNonNull(getAsPredefined("GuiHandler"));
+    }
+
+    public PlayerHandler getPlayerHandler() {
+        return Objects.requireNonNull(getAsPredefined("PlayerHandler"));
     }
 }

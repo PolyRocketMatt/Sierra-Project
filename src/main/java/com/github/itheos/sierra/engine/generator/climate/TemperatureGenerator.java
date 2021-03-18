@@ -20,7 +20,7 @@ public class TemperatureGenerator extends ClimateGenerator {
     private SimplexNoise noise, distortion;
 
     public TemperatureGenerator(int seed) {
-        this.octaves = Sierra.getGenerators().<Integer>get("generators.climate.temperature.octaves");
+        this.octaves = Sierra.getGenerators().getAsInteger("generators.climate.temperature.octaves");
         this.scale = Sierra.getGenerators().getAsFloat("generators.climate.temperature.scale");
         this.persistence = Sierra.getGenerators().getAsFloat("generators.climate.temperature.persistence");
         this.lacunarity = Sierra.getGenerators().getAsFloat("generators.climate.temperature.lacunarity");

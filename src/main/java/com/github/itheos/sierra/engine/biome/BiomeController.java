@@ -1,5 +1,9 @@
 package com.github.itheos.sierra.engine.biome;
 
+import com.github.itheos.sierra.engine.SierraWorld;
+import com.github.itheos.sierra.engine.climate.ClimateController;
+import com.github.itheos.sierra.math.Range;
+import com.github.itheos.sierra.utils.KeyValuePair;
 import org.bukkit.block.Biome;
 
 /**
@@ -7,6 +11,34 @@ import org.bukkit.block.Biome;
  */
 
 public class BiomeController {
+
+    public class BiomeTag {
+
+        private Range temperatureRange, precipitationRange, windRange, topographyRange;
+
+        public BiomeTag(Range temperatureRange, Range precipitationRange, Range windRange, Range topographyRange) {
+            this.temperatureRange = temperatureRange;
+            this.precipitationRange = precipitationRange;
+            this.windRange = windRange;
+            this.topographyRange = topographyRange;
+        }
+
+        public Range getTemperatureRange() {
+            return temperatureRange;
+        }
+
+        public Range getPrecipitationRange() {
+            return precipitationRange;
+        }
+
+        public Range getWindRange() {
+            return windRange;
+        }
+
+        public Range getTopographyRange() {
+            return topographyRange;
+        }
+    }
 
     /**
      * A list of all biomes in Sierra and their respective
@@ -41,7 +73,12 @@ public class BiomeController {
                     return biome;
             return null;
         }
+    }
 
+    private SierraWorld parent;
+
+    public BiomeController(SierraWorld parent) {
+        this.parent = parent;
     }
 
 }

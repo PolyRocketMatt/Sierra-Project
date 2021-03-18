@@ -18,13 +18,15 @@ public abstract class SierraBiome {
 
     protected SierraWorld world;
     protected BiomeController.Biomes biome;
+    protected BiomeController.BiomeTag tag;
     protected AssetHandler handler;
     protected ArrayList<PlaceableAsset> assets;
 
-    public SierraBiome(SierraWorld world, BiomeController.Biomes biome) {
+    public SierraBiome(SierraWorld world, BiomeController.Biomes biome, BiomeController.BiomeTag tag) {
         this.world = world;
         this.biome = biome;
-        this.handler = Objects.requireNonNull(Sierra.getHandlerManager().<AssetHandler>getAsPredefined("AssetHandler"));
+        this.tag = tag;
+        this.handler = Sierra.getHandlerManager().getAssetHandler();
         this.assets = new ArrayList<>();
 
         handler.getPlaceableAssets().forEach(asset -> {
@@ -34,21 +36,21 @@ public abstract class SierraBiome {
     }
 
     /**
-     * Get the SierraWorld this biome instance belongs to.
-     *
-     * @return the world
-     */
-    public SierraWorld getWorld() {
-        return world;
-    }
-
-    /**
      * Get the actual biome representation.
      *
      * @return the biome
      */
     public BiomeController.Biomes getBiome() {
         return biome;
+    }
+
+    /**
+     * Get the biome tag for this biome.
+     *
+     * @return the tag
+     */
+    public BiomeController.BiomeTag getTag() {
+        return tag;
     }
 
     /**

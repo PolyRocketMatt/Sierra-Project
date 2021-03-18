@@ -58,7 +58,14 @@ public class WorldUtils {
         //  Generating seeds
         config.set(key + ".seeds.base", MathUtils.intSeed());
 
+        //  Biome seeds
         config.set(key + ".seeds.biome.wheat-fields", MathUtils.intSeed());
+
+        //  Controller seeds
+        config.set(key + ".seeds.controllers.topography", MathUtils.intSeed());
+        config.set(key + ".seeds.controllers.wetness", MathUtils.intSeed());
+        config.set(key + ".seeds.controllers.humidity", MathUtils.intSeed());
+        config.set(key + ".seeds.controllers.vegetation", MathUtils.intSeed());
     }
 
 }

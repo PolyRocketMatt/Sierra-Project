@@ -132,11 +132,11 @@ public class Sierra extends JavaPlugin {
         if (dir.listFiles() == null || Objects.requireNonNull(dir.listFiles()).length == 0) {
             logger.log("Connecting to database, downloading assets");
 
-            Objects.requireNonNull(getHandlerManager().<AssetHandler>getAsPredefined("AssetHandler")).downloadAssets();
+            getHandlerManager().getAssetHandler().downloadAssets();
 
             logger.log("Downloaded assets");
         } else
-            Objects.requireNonNull(getHandlerManager().<AssetHandler>getAsPredefined("AssetHandler")).load();
+            getHandlerManager().getAssetHandler().load();
 
         //  Register Events
         Objects.requireNonNull(handlerManager.<EventHandler>getAsPredefined("EventHandler")).register(new InteractionListener());

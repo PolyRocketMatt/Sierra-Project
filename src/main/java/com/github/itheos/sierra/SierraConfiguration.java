@@ -54,6 +54,10 @@ public class SierraConfiguration {
         return (float) configuration.getDouble(path);
     }
 
+    public int getAsInteger(String path) {
+        return configuration.getInt(path);
+    }
+
     /**
      * Get a list of attributes from the specified path.
      *

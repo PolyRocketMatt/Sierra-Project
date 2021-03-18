@@ -22,8 +22,8 @@ public class BaseGenerator implements NoiseGenerator {
     private SimplexNoise noise;
 
     public BaseGenerator(int seed) {
-        this.multiplier = Sierra.getGenerators().<Integer>get("generators.base.multiplier");
-        this.octaves = Sierra.getGenerators().<Integer>get("generators.base.octaves");
+        this.multiplier = Sierra.getGenerators().getAsInteger("generators.base.multiplier");
+        this.octaves = Sierra.getGenerators().getAsInteger("generators.base.octaves");
         this.scale = Sierra.getGenerators().getAsFloat("generators.base.scale");
         this.persistence = Sierra.getGenerators().getAsFloat("generators.base.persistence");
         this.lacunarity = Sierra.getGenerators().getAsFloat("generators.base.lacunarity");

@@ -20,14 +20,12 @@ public class ConnectionListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onQuit(PlayerQuitEvent event) {
-        Objects.requireNonNull(Sierra.getHandlerManager()
-                .<PlayerHandler>getAsPredefined("PlayerHandler")).remove(event.getPlayer());
+        Sierra.getHandlerManager().getPlayerHandler().remove(event.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.LOW)
     public void onJoin(PlayerJoinEvent event) {
-        Objects.requireNonNull(Sierra.getHandlerManager()
-                .<PlayerHandler>getAsPredefined("PlayerHandler")).add(event.getPlayer());
+        Sierra.getHandlerManager().getPlayerHandler().add(event.getPlayer());
     }
 
 }
