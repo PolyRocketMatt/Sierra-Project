@@ -30,10 +30,6 @@ public class SierraWorld {
     private BiomeController biomeController;
     private LayeredController layeredController;
 
-    //  TODO: Fix this mess
-    /** Wheat field biome? */
-    private WheatFieldBiome wheatFieldBiome;
-
     /**
      * Initialize a new SierraWorld.
      *
@@ -47,8 +43,6 @@ public class SierraWorld {
         this.climateController = new ClimateController(this);
         this.biomeController = new BiomeController(this);
         this.layeredController = new LayeredController(this);
-
-        this.wheatFieldBiome = new WheatFieldBiome(this);
     }
 
     /**
@@ -103,15 +97,6 @@ public class SierraWorld {
      */
     public LayeredController getLayeredController() {
         return layeredController;
-    }
-
-    /**
-     * Get the Wheat Field Biome I suppose?
-     *
-     * @return the Wheat Field Biome instance
-     */
-    public WheatFieldBiome getWheatFieldBiome() {
-        return wheatFieldBiome;
     }
 
 }
