@@ -7,6 +7,13 @@ package com.github.itheos.sierra.engine.biome;
 public interface BiomeControlFactor {
 
     /**
+     * Get the key for the control factor.
+     *
+     * @return the key
+     */
+    String getKey();
+
+    /**
      * Get the control factor for the given key.
      *
      * @param key the key

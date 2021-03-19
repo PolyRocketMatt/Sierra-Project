@@ -3,6 +3,7 @@ package com.github.itheos.sierra.engine.biome;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.biome.types.WheatFieldBiome;
 import com.github.itheos.sierra.utils.ArrayUtils;
+import com.github.itheos.sierra.utils.StringUtils;
 import org.bukkit.block.Biome;
 
 import java.util.HashMap;
@@ -81,7 +82,7 @@ public class BiomeController {
     private SierraWorld parent;
 
     /** A mapping that contains all possible combination of climate factors mapped to their respective biomes. */
-    private Map<String[], SierraBiome> biomeKeyMap;
+    private Map<String, SierraBiome> biomeKeyMap;
 
     /**
      * Initialize a new BiomeController.
@@ -99,20 +100,26 @@ public class BiomeController {
      * Load the key map for the biome mapping.
      */
     private void loadKeyMap() {
-        biomeKeyMap.put(WheatFieldBiome.getKeys(), new WheatFieldBiome(parent));
+        WheatFieldBiome.register(new WheatFieldBiome(parent), biomeKeyMap);
     }
 
     public BiomeType[][] compute(int chunkX, int chunkZ) {
+        BiomeType[][] types = new BiomeType[16][16];
         BiomeControlFactor[][][] climate = parent.getClimateController().compute(chunkX, chunkZ);
         BiomeControlFactor[][][] factors = parent.getLayeredController().compute(chunkX, chunkZ);
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 BiomeControlFactor[] controlFactors = ArrayUtils.mergeFactors(climate[x][z], factors[x][z]);
+                String key = StringUtils.generateKey(controlFactors);
+
+                //  Find match
+                //  TODO: Find a default biome
+                types[x][z] = biomeKeyMap.getOrDefault(key, null).getBiome();
             }
         }
 
-        return null;
+        return types;
     }
 
 }

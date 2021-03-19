@@ -13,6 +13,7 @@ import com.github.itheos.sierra.handlers.AssetHandler;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by PolyRocketMatt on 13/03/2021.
@@ -162,4 +163,13 @@ public abstract class SierraBiome {
      * @return the vegetation levels
      */
     public static ControlFactors.VegetationLevel[] getVegetationLevels() throws BiomeException { throw new BiomeException("No temperature levels defined"); }
+
+    /**
+     * Register the biome to the biome map.
+     *
+     * @param biomeMap the biome map
+     * @return the map containing the keys associated with this biome and the biome mapped to these keys
+     * @throws BiomeException if no biome is defined
+     */
+    public static <T extends SierraBiome> Map<String, SierraBiome> register(T instance, Map<String, SierraBiome> biomeMap) throws BiomeException  { throw new BiomeException("Cannot register abstract biome"); }
 }

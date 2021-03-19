@@ -1,5 +1,6 @@
 package com.github.itheos.sierra.engine.biome.types;
 
+import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.biome.BiomeController;
@@ -14,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.generator.ChunkGenerator;
 
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -157,4 +159,11 @@ public class WheatFieldBiome extends SierraBiome {
     public static ControlFactors.VegetationLevel[] getVegetationLevels() {
         return new ControlFactors.VegetationLevel[] { ControlFactors.VegetationLevel.SOME };
     }
+
+    public static <T extends SierraBiome> Map<String, SierraBiome> register(T instance, Map<String, SierraBiome> biomeMap) {
+        for (String key : getKeys())
+            biomeMap.put(key, instance);
+        return biomeMap;
+    }
+
 }

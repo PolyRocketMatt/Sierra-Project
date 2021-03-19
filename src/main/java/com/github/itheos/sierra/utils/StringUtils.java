@@ -1,5 +1,6 @@
 package com.github.itheos.sierra.utils;
 
+import com.github.itheos.sierra.engine.biome.BiomeControlFactor;
 import com.github.itheos.sierra.engine.biome.ControlFactors;
 import com.github.itheos.sierra.engine.biome.LayeredController;
 import com.github.itheos.sierra.engine.generator.climate.PrecipitationGenerator;
@@ -25,6 +26,10 @@ public class StringUtils {
 
     public static String toWorldsKey(String name) {
         return "worlds." + name;
+    }
+
+    public static String generateKey(BiomeControlFactor[] factors) {
+        return String.join(".", Arrays.stream(factors).map(BiomeControlFactor::getKey).toArray(String[]::new));
     }
 
     public static String[] generateKeys(ControlFactors.TemperatureLevel[] temperatureLevels,
