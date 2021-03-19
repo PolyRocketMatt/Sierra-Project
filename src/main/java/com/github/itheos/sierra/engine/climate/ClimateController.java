@@ -36,14 +36,20 @@ public class ClimateController implements Controller {
 
         String key = StringUtils.toWorldsKey(parent.getName());
 
-        this.temperatureGenerator = new TemperatureGenerator(
-                parent.getConfig().getAsInteger( key + ".seeds.climate.temperature"));
-        this.windGenerator = new WindGenerator(
-                parent.getConfig().getAsInteger(key + ".seeds.climate.wind"),
-                parent.getConfig().getAsInteger(key + ".seeds.climate.wind-direction"),
-                parent.getConfig().getAsInteger(key + ".seeds.climate.wind-offset"));
-        this.precipitationGenerator = new PrecipitationGenerator(
-                parent.getConfig().getAsInteger(key + ".seeds.climate.precipitation"));
+        try {
+            this.temperatureGenerator = new TemperatureGenerator(
+                    parent.getConfig().getAsInteger( key + ".seeds.climate.temperature"));
+            this.windGenerator = new WindGenerator(
+                    parent.getConfig().getAsInteger(key + ".seeds.climate.wind"),
+                    parent.getConfig().getAsInteger(key + ".seeds.climate.wind-direction"),
+                    parent.getConfig().getAsInteger(key + ".seeds.climate.wind-offset"));
+            this.precipitationGenerator = new PrecipitationGenerator(
+                    parent.getConfig().getAsInteger(key + ".seeds.climate.precipitation"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        System.out.println("Init Climate");
     }
 
     /**

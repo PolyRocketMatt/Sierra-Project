@@ -3,6 +3,7 @@ package com.github.itheos.sierra.engine.biome;
 import com.github.itheos.sierra.engine.Controller;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.generator.general.SimplexGenerator;
+import com.github.itheos.sierra.utils.StringUtils;
 
 /**
  * Created by PolyRocketMatt on 18/03/2021.
@@ -29,7 +30,9 @@ public class LayeredController implements Controller {
      * @param world the parent world
      */
     public LayeredController(SierraWorld world) {
-        String key = "worlds." + world.getName();
+        String key = StringUtils.toWorldsKey(world.getName());
+
+        System.out.println("Ok?");
 
         this.topographyController = new SimplexGenerator(world.getConfig().getAsInteger(key + ".seeds.controllers.topography"));
         this.wetnessController = new SimplexGenerator(world.getConfig().getAsInteger(key + ".seeds.controllers.wetness"));
@@ -37,6 +40,8 @@ public class LayeredController implements Controller {
         this.vegetationController = new SimplexGenerator(world.getConfig().getAsInteger(key + ".seeds.controllers.vegetation"));
 
         this.max = topographyController.trueMax(topographyController.getOctaves());
+
+        System.out.println("Init Layer");
     }
 
     /**

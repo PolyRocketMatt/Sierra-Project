@@ -61,8 +61,6 @@ public class AssetHandler extends Handler {
                 SierraAsset[] assets = handle.getObjectMapper().readValue(json, SierraAsset[].class);
                 Sierra.getDefaultLogger().log("Found " + assets.length + " assets");
 
-                System.out.println(assets[0].blocks.size());
-
                 this.assets = new ArrayList<>(Arrays.asList(assets));
 
                 install();

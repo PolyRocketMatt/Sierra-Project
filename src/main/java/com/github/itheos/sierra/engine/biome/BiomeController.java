@@ -97,8 +97,12 @@ public class BiomeController {
         this.biomeKeyMap = new HashMap<>();
         this.biomeTypeMap = new HashMap<>();
 
+        System.out.println("Ok?");
+
         loadKeyMap();
         loadTypeMap();
+
+        System.out.println("Init Biome");
     }
 
     /**
