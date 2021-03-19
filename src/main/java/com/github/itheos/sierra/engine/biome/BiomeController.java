@@ -101,4 +101,11 @@ public class BiomeController {
         biomeKeyMap.put(WheatFieldBiome.getKeys(), new WheatFieldBiome(parent));
     }
 
+    public BiomeType[][] compute(int chunkX, int chunkZ) {
+        float[][][] climate = parent.getClimateController().compute(chunkX, chunkZ);
+        float[][][] factors = parent.getLayeredController().compute(chunkX, chunkZ);
+
+
+    }
+
 }

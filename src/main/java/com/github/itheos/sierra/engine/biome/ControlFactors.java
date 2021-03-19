@@ -1,5 +1,7 @@
 package com.github.itheos.sierra.engine.biome;
 
+import com.github.itheos.sierra.math.Range;
+
 /**
  * Created by PolyRocketMatt on 19/03/2021.
  */
@@ -11,17 +13,17 @@ public class ControlFactors {
      * for this generator.
      */
     public enum TemperatureLevel implements BiomeControlFactor {
-        FREEZING("FREEZING", 0.0f),
-        COLD("COLD", 0.2f),
-        LUKEWARM("LUKEWARM", 0.4f),
-        HOT("HOT", 0.6f),
-        VERY_HOT("VERY_HOT", 0.8f);
+        FREEZING("FREEZING", Range.of(0.0f, 0.2f)),
+        COLD("COLD", Range.of(0.2f, 0.4f)),
+        LUKEWARM("LUKEWARM", Range.of(0.4f, 0.6f)),
+        HOT("HOT", Range.of(0.6f, 0.8f)),
+        VERY_HOT("VERY_HOT", Range.of(0.8f, 1.0f));
 
         /** The key for a temperature level.*/
         private String key;
 
         /** The corresponding noise value for this temperature level. */
-        private float level;
+        private Range level;
 
         /**
          * Initialize a new TemperatureLevel.
@@ -29,7 +31,7 @@ public class ControlFactors {
          * @param key the key
          * @param level the level
          */
-        TemperatureLevel(String key, float level) {
+        TemperatureLevel(String key, Range level) {
             this.key = key;
             this.level = level;
         }
@@ -48,7 +50,7 @@ public class ControlFactors {
          *
          * @return the level
          */
-        public float getLevel() {
+        public Range getLevel() {
             return level;
         }
 
@@ -59,6 +61,14 @@ public class ControlFactors {
                     return level;
             return null;
         }
+
+        @Override
+        public BiomeControlFactor translate(float value) {
+            for (TemperatureLevel level : values())
+                if (level.level.isInRange(value))
+                    return level;
+            return null;
+        }
     }
 
     /**
@@ -66,17 +76,17 @@ public class ControlFactors {
      * for this generator.
      */
     public enum PrecipitationLevel implements BiomeControlFactor {
-        VERY_WET("VERY_WET", 0.0f),
-        WET("WET", 0.2f),
-        REGULAR_WET("REGULAR_WET", 0.4f),
-        DRY("DRY", 0.6f),
-        VERY_DRY("VERY_DRY", 0.8f);
+        VERY_WET("VERY_WET", Range.of(0.0f, 0.2f)),
+        WET("WET", Range.of(0.2f, 0.4f)),
+        REGULAR_WET("REGULAR_WET", Range.of(0.4f, 0.6f)),
+        DRY("DRY", Range.of(0.6f, 0.8f)),
+        VERY_DRY("VERY_DRY", Range.of(0.8f, 1.0f));
 
         /** The key for a precipitation level.*/
         private String key;
 
         /** The corresponding noise value for this precipitation level. */
-        private float level;
+        private Range level;
 
         /**
          * Initialize a new PrecipitationLevel.
@@ -84,7 +94,7 @@ public class ControlFactors {
          * @param key the key
          * @param level the level
          */
-        PrecipitationLevel(String key, float level) {
+        PrecipitationLevel(String key, Range level) {
             this.key = key;
             this.level = level;
         }
@@ -103,7 +113,7 @@ public class ControlFactors {
          *
          * @return the level
          */
-        public float getLevel() {
+        public Range getLevel() {
             return level;
         }
 
@@ -114,6 +124,14 @@ public class ControlFactors {
                     return level;
             return null;
         }
+
+        @Override
+        public BiomeControlFactor translate(float value) {
+            for (PrecipitationLevel level : values())
+                if (level.level.isInRange(value))
+                    return level;
+            return null;
+        }
     }
 
     /**
@@ -121,15 +139,15 @@ public class ControlFactors {
      * for this generator.
      */
     public enum WindLevel implements BiomeControlFactor {
-        CALM("CALM", 0.0f),
-        WINDY("WINDY", 0.4f),
-        EXTREMELY_WINDY("EXTREMELY_WINDY", 0.8f);
+        CALM("CALM", Range.of(0.0f, 0.4f)),
+        WINDY("WINDY", Range.of(0.4f, 0.8f)),
+        EXTREMELY_WINDY("EXTREMELY_WINDY", Range.of(0.8f, 1.0f));
 
         /** The key for a wind level.*/
         private String key;
 
         /** The corresponding noise value for this wind level. */
-        private float level;
+        private Range level;
 
         /**
          * Initialize a new WindLevel.
@@ -137,7 +155,7 @@ public class ControlFactors {
          * @param key the key
          * @param level the level
          */
-        WindLevel(String key, float level) {
+        WindLevel(String key, Range level) {
             this.key = key;
             this.level = level;
         }
@@ -156,7 +174,7 @@ public class ControlFactors {
          *
          * @return the level
          */
-        public float getLevel() {
+        public Range getLevel() {
             return level;
         }
 
@@ -167,6 +185,14 @@ public class ControlFactors {
                     return level;
             return null;
         }
+
+        @Override
+        public BiomeControlFactor translate(float value) {
+            for (WindLevel level : values())
+                if (level.level.isInRange(value))
+                    return level;
+            return null;
+        }
     }
 
     /**
@@ -174,17 +200,17 @@ public class ControlFactors {
      * for this generator.
      */
     public enum TopographyLevel implements BiomeControlFactor {
-        FLAT("FLAT", 0.0f),
-        HILLY("HILLY", 0.2f),
-        HILLS("HILLS", 0.4f),
-        EXTREME_HILLS("EXTREME_HILLS", 0.6f),
-        MOUNTAINOUS("MOUNTAINOUS", 0.8f);
+        FLAT("FLAT", Range.of(0.0f, 0.2f)),
+        HILLY("HILLY", Range.of(0.2f, 0.4f)),
+        HILLS("HILLS", Range.of(0.4f, 0.6f)),
+        EXTREME_HILLS("EXTREME_HILLS", Range.of(0.6f, 0.8f)),
+        MOUNTAINOUS("MOUNTAINOUS", Range.of(0.8f, 1.0f));
 
         /** The key for a steepness level.*/
         private String key;
 
         /** The corresponding noise value for this steepness level. */
-        private float level;
+        private Range level;
 
         /**
          * Initialize a new TopographyLevel.
@@ -192,7 +218,7 @@ public class ControlFactors {
          * @param key the key
          * @param level the level
          */
-        TopographyLevel(String key, float level) {
+        TopographyLevel(String key, Range level) {
             this.key = key;
             this.level = level;
         }
@@ -211,7 +237,7 @@ public class ControlFactors {
          *
          * @return the level
          */
-        public float getLevel() {
+        public Range getLevel() {
             return level;
         }
 
@@ -222,6 +248,14 @@ public class ControlFactors {
                     return level;
             return null;
         }
+
+        @Override
+        public BiomeControlFactor translate(float value) {
+            for (TopographyLevel level : values())
+                if (level.level.isInRange(value))
+                    return level;
+            return null;
+        }
     }
 
     /**
@@ -229,15 +263,15 @@ public class ControlFactors {
      * for this generator.
      */
     public enum WetnessLevel implements BiomeControlFactor {
-        DRY("DRT", 0.0f),
-        WET("WET", 0.3f),
-        EXTREMELY_WET("EXTREMELY_WET", 0.7f);
+        DRY("DRT", Range.of(0.0f, 0.3f)),
+        WET("WET", Range.of(0.3f, 0.7f)),
+        EXTREMELY_WET("EXTREMELY_WET", Range.of(0.7f, 1.0f));
 
         /** The key for a wetness level.*/
         private String key;
 
         /** The corresponding noise value for this wetness level. */
-        private float level;
+        private Range level;
 
         /**
          * Initialize a new WetnessLevel.
@@ -245,7 +279,7 @@ public class ControlFactors {
          * @param key the key
          * @param level the level
          */
-        WetnessLevel(String key, float level) {
+        WetnessLevel(String key, Range level) {
             this.key = key;
             this.level = level;
         }
@@ -264,7 +298,7 @@ public class ControlFactors {
          *
          * @return the level
          */
-        public float getLevel() {
+        public Range getLevel() {
             return level;
         }
 
@@ -275,6 +309,14 @@ public class ControlFactors {
                     return level;
             return null;
         }
+
+        @Override
+        public BiomeControlFactor translate(float value) {
+            for (WetnessLevel level : values())
+                if (level.level.isInRange(value))
+                    return level;
+            return null;
+        }
     }
 
     /**
@@ -282,15 +324,15 @@ public class ControlFactors {
      * for this generator.
      */
     public enum HumidityLevel implements BiomeControlFactor {
-        ARID("ARID", 0.0f),
-        HUMID("HUMID", 0.5f),
-        VERY_HUMID("VERY_HUMID", 0.8f);
+        ARID("ARID", Range.of(0.0f, 0.5f)),
+        HUMID("HUMID", Range.of(0.0f, 0.8f)),
+        VERY_HUMID("VERY_HUMID", Range.of(0.8f, 1.0f));
 
         /** The key for a temperature level.*/
         private String key;
 
         /** The corresponding noise value for this humidity level. */
-        private float level;
+        private Range level;
 
         /**
          * Initialize a new HumidityLevel.
@@ -298,7 +340,7 @@ public class ControlFactors {
          * @param key the key
          * @param level the level
          */
-        HumidityLevel(String key, float level) {
+        HumidityLevel(String key, Range level) {
             this.key = key;
             this.level = level;
         }
@@ -317,7 +359,7 @@ public class ControlFactors {
          *
          * @return the level
          */
-        public float getLevel() {
+        public Range getLevel() {
             return level;
         }
 
@@ -328,6 +370,14 @@ public class ControlFactors {
                     return level;
             return null;
         }
+
+        @Override
+        public BiomeControlFactor translate(float value) {
+            for (HumidityLevel level : values())
+                if (level.level.isInRange(value))
+                    return level;
+            return null;
+        }
     }
 
     /**
@@ -335,17 +385,17 @@ public class ControlFactors {
      * for this generator.
      */
     public enum VegetationLevel implements BiomeControlFactor {
-        BARE("BARE", 0.0f),
-        SOME("SOME", 0.2f),
-        MEDIUM("MEDIUM", 0.4f),
-        LOTS("LOTS", 0.6f),
-        OVERGROWN("VERY_HOT", 0.8f);
+        BARE("BARE", Range.of(0.0f, 0.2f)),
+        SOME("SOME", Range.of(0.2f, 0.4f)),
+        MEDIUM("MEDIUM", Range.of(0.4f, 0.6f)),
+        LOTS("LOTS", Range.of(0.6f, 0.8f)),
+        OVERGROWN("VERY_HOT", Range.of(0.8f, 1.0f));
 
         /** The key for a vegetation level.*/
         private String key;
 
         /** The corresponding noise value for this vegetation level. */
-        private float level;
+        private Range level;
 
         /**
          * Initialize a new VegetationLevel.
@@ -353,7 +403,7 @@ public class ControlFactors {
          * @param key the key
          * @param level the level
          */
-        VegetationLevel(String key, float level) {
+        VegetationLevel(String key, Range level) {
             this.key = key;
             this.level = level;
         }
@@ -372,7 +422,7 @@ public class ControlFactors {
          *
          * @return the level
          */
-        public float getLevel() {
+        public Range getLevel() {
             return level;
         }
 
@@ -380,6 +430,14 @@ public class ControlFactors {
         public BiomeControlFactor get(String key) {
             for (VegetationLevel level : values())
                 if (level.key.equalsIgnoreCase(key))
+                    return level;
+            return null;
+        }
+
+        @Override
+        public BiomeControlFactor translate(float value) {
+            for (VegetationLevel level : values())
+                if (level.level.isInRange(value))
                     return level;
             return null;
         }

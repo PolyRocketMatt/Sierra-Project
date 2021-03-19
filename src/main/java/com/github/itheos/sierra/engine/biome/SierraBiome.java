@@ -110,7 +110,7 @@ public abstract class SierraBiome {
      * @return the keys that this biome accepts. Biomes can include duplicates
      * @throws SierraException if no keys have been defined
      */
-    public String[] getKeys() throws SierraException {
+    public static String[] getKeys() throws SierraException {
         throw new BiomeException("Could not define biome");
     }
 
@@ -119,47 +119,47 @@ public abstract class SierraBiome {
      *
      * @return the temperature levels
      */
-    public abstract ControlFactors.TemperatureLevel[] getTemperatureLevels();
+    public static ControlFactors.TemperatureLevel[] getTemperatureLevels() throws BiomeException { throw new BiomeException("No temperature levels defined"); }
 
     /**
      * Get the wind levels for this biome.
      *
      * @return the wind levels
      */
-    public abstract ControlFactors.WindLevel[] getWindLevels();
+    public static ControlFactors.WindLevel[] getWindLevels() throws BiomeException { throw new BiomeException("No temperature levels defined"); }
 
     /**
      * Get the precipitation levels for this biome.
      *
      * @return the precipitation levels
      */
-    public abstract ControlFactors.PrecipitationLevel[] getPrecipitationLevels();
+    public static ControlFactors.PrecipitationLevel[] getPrecipitationLevels() throws BiomeException { throw new BiomeException("No temperature levels defined"); }
 
     /**
      * Get the topography levels for this biome.
      *
      * @return the topography levels
      */
-    public abstract ControlFactors.TopographyLevel[] getTopographyLevels();
+    public static ControlFactors.TopographyLevel[] getTopographyLevels() throws BiomeException { throw new BiomeException("No temperature levels defined"); }
 
     /**
      * Get the wetness levels for this biome.
      *
      * @return the wetness levels
      */
-    public abstract ControlFactors.WetnessLevel[] getWetnessLevels();
+    public static ControlFactors.WetnessLevel[] getWetnessLevels() throws BiomeException { throw new BiomeException("No temperature levels defined"); }
 
     /**
      * Get the humidity levels for this biome.
      *
      * @return the humidity levels
      */
-    public abstract ControlFactors.HumidityLevel[] getHumidityLevels();
+    public static ControlFactors.HumidityLevel[] getHumidityLevels() throws BiomeException { throw new BiomeException("No temperature levels defined"); }
 
     /**
      * Get the vegetation levels for this biome.
      *
      * @return the vegetation levels
      */
-    public abstract ControlFactors.VegetationLevel[] getVegetationLevels();
+    public static ControlFactors.VegetationLevel[] getVegetationLevels() throws BiomeException { throw new BiomeException("No temperature levels defined"); }
 }

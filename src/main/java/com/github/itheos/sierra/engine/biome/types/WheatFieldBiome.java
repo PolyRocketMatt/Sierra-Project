@@ -125,44 +125,36 @@ public class WheatFieldBiome extends SierraBiome {
         return data;
     }
 
-    @Override
-    public String[] getKeys() {
+    public static String[] getKeys() {
         return StringUtils.generateKeys(getTemperatureLevels(), getWindLevels(), getPrecipitationLevels(), getTopographyLevels(),
                 getWetnessLevels(), getHumidityLevels(), getVegetationLevels());
     }
 
-    @Override
-    public ControlFactors.TemperatureLevel[] getTemperatureLevels() {
+    public static ControlFactors.TemperatureLevel[] getTemperatureLevels() {
         return new ControlFactors.TemperatureLevel[] { ControlFactors.TemperatureLevel.LUKEWARM, ControlFactors.TemperatureLevel.HOT };
     }
 
-    @Override
-    public ControlFactors.WindLevel[] getWindLevels() {
+    public static ControlFactors.WindLevel[] getWindLevels() {
         return new ControlFactors.WindLevel[] { ControlFactors.WindLevel.CALM, ControlFactors.WindLevel.WINDY };
     }
 
-    @Override
-    public ControlFactors.PrecipitationLevel[] getPrecipitationLevels() {
+    public static ControlFactors.PrecipitationLevel[] getPrecipitationLevels() {
         return new ControlFactors.PrecipitationLevel[] { ControlFactors.PrecipitationLevel.DRY, ControlFactors.PrecipitationLevel.REGULAR_WET };
     }
 
-    @Override
-    public ControlFactors.TopographyLevel[] getTopographyLevels() {
+    public static ControlFactors.TopographyLevel[] getTopographyLevels() {
         return new ControlFactors.TopographyLevel[] { ControlFactors.TopographyLevel.FLAT, ControlFactors.TopographyLevel.HILLY };
     }
 
-    @Override
-    public ControlFactors.WetnessLevel[] getWetnessLevels() {
+    public static ControlFactors.WetnessLevel[] getWetnessLevels() {
         return new ControlFactors.WetnessLevel[] { ControlFactors.WetnessLevel.DRY };
     }
 
-    @Override
-    public ControlFactors.HumidityLevel[] getHumidityLevels() {
+    public static ControlFactors.HumidityLevel[] getHumidityLevels() {
         return new ControlFactors.HumidityLevel[] { ControlFactors.HumidityLevel.ARID, ControlFactors.HumidityLevel.HUMID };
     }
 
-    @Override
-    public ControlFactors.VegetationLevel[] getVegetationLevels() {
+    public static ControlFactors.VegetationLevel[] getVegetationLevels() {
         return new ControlFactors.VegetationLevel[] { ControlFactors.VegetationLevel.SOME };
     }
 }
