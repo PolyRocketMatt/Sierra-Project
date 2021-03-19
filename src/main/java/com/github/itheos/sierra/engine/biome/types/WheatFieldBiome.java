@@ -101,15 +101,15 @@ public class WheatFieldBiome extends SierraBiome {
             }
         } else if (random.nextInt(10000) >= 9900) {
             int size = random.nextInt(5);
-
+            size = 5;
             if (x > 1 && z > 1 && x + size < 15 && z + size < 15) {
-                int[][][] rock = ProceduralRock.generate(size, 5.0f);
+                int[][][] rock = ProceduralRock.generate(size, 0.1f);
 
-                for (int i = 0; i < size; i++) {
-                    for (int j = 0; j < size; j++) {
-                        for (int k = 0; k < size; k++) {
+                for (int i = 0; i < rock.length; i++) {
+                    for (int j = 0; j < rock[0].length; j++) {
+                        for (int k = 0; k < rock[0][0].length; k++) {
                             if (rock[i][j][k] == 1)
-                                data.setBlock(x + i, y + j, z + k, Material.STONE);
+                                data.setBlock(x + i, y + k, z + j, Material.STONE);
                         }
                     }
                 }
