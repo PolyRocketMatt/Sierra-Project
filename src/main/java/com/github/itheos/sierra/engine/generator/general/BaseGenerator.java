@@ -68,10 +68,6 @@ public class BaseGenerator implements NoiseGenerator {
         return result;
     }
 
-    public int getMultiplier() {
-        return multiplier;
-    }
-
     @Override
     public float trueMax(int octaves) {
         float max = 0.0f;

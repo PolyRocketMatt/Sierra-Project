@@ -3,6 +3,7 @@ package com.github.itheos.sierra.engine.biome.types;
 import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.biome.BiomeController;
+import com.github.itheos.sierra.engine.biome.LayeredController;
 import com.github.itheos.sierra.engine.biome.SierraBiome;
 import com.github.itheos.sierra.engine.generator.climate.PrecipitationGenerator;
 import com.github.itheos.sierra.engine.generator.climate.TemperatureGenerator;
@@ -10,13 +11,12 @@ import com.github.itheos.sierra.engine.generator.climate.WindGenerator;
 import com.github.itheos.sierra.engine.generator.ProceduralRock;
 import com.github.itheos.sierra.engine.generator.biome.WheatFieldGenerator;
 import com.github.itheos.sierra.utils.MathUtils;
+import com.github.itheos.sierra.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.generator.ChunkGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -38,6 +38,14 @@ public class WheatFieldBiome extends SierraBiome {
             new WindGenerator.WindLevel[] { WindGenerator.WindLevel.CALM, WindGenerator.WindLevel.WINDY };
     private static PrecipitationGenerator.PrecipitationLevel[] precipitationLevels =
             new PrecipitationGenerator.PrecipitationLevel[] { PrecipitationGenerator.PrecipitationLevel.REGULAR_WET, PrecipitationGenerator.PrecipitationLevel.DRY };
+    private static LayeredController.TopographyLevel[] topographyLevels =
+            new LayeredController.TopographyLevel[] { LayeredController.TopographyLevel.FLAT, LayeredController.TopographyLevel.HILLY };
+    private static LayeredController.WetnessLevel[] wetnessLevels =
+            new LayeredController.WetnessLevel[] { LayeredController.WetnessLevel.DRY, LayeredController.WetnessLevel.WET };
+    private static LayeredController.HumidityLevel[] humidityLevels =
+            new LayeredController.HumidityLevel[] { LayeredController.HumidityLevel.HUMID };
+    private static LayeredController.VegetationLevel[] vegetationLevels =
+            new LayeredController.VegetationLevel[] { LayeredController.VegetationLevel.SOME };
 
     public WheatFieldBiome(SierraWorld world) {
         super(world, BiomeController.BiomeType.WHEAT_FIELDS);
@@ -117,7 +125,7 @@ public class WheatFieldBiome extends SierraBiome {
             }
         } else if (random.nextInt(10000) >= 9900) {
             int size = random.nextInt(5);
-            size = 5;
+
             if (x > 1 && z > 1 && x + size < 15 && z + size < 15) {
                 int[][][] rock = ProceduralRock.generate(size, 0.1f);
 
@@ -136,12 +144,7 @@ public class WheatFieldBiome extends SierraBiome {
     }
 
     public static String[] getKeys() {
-        List<String> keys = new ArrayList<>();
-
-        for (TemperatureGenerator.TemperatureLevel temperatureLevel : temperatureLevels)
-            for (WindGenerator.WindLevel windLevel : windLevels)
-                for (PrecipitationGenerator.PrecipitationLevel precipitationLevel : precipitationLevels)
-                    keys.add(String.join(".", temperatureLevel.getKey(), windLevel.getKey(), precipitationLevel.getKey()));
-        return keys.toArray(new String[keys.size()]);
+        return StringUtils.generateKeys(temperatureLevels, windLevels, precipitationLevels, topographyLevels,
+                wetnessLevels, humidityLevels, vegetationLevels);
     }
 }
