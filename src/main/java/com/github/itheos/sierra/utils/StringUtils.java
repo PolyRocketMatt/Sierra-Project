@@ -1,5 +1,6 @@
 package com.github.itheos.sierra.utils;
 
+import com.github.itheos.sierra.engine.biome.ControlFactors;
 import com.github.itheos.sierra.engine.biome.LayeredController;
 import com.github.itheos.sierra.engine.generator.climate.PrecipitationGenerator;
 import com.github.itheos.sierra.engine.generator.climate.TemperatureGenerator;
@@ -26,22 +27,22 @@ public class StringUtils {
         return "worlds." + name;
     }
 
-    public static String[] generateKeys(TemperatureGenerator.TemperatureLevel[] temperatureLevels,
-                                        WindGenerator.WindLevel[] windLevels,
-                                        PrecipitationGenerator.PrecipitationLevel[] precipitationLevels,
-                                        LayeredController.TopographyLevel[] topographyLevels,
-                                        LayeredController.WetnessLevel[] wetnessLevels,
-                                        LayeredController.HumidityLevel[] humidityLevels,
-                                        LayeredController.VegetationLevel[] vegetationLevels) {
+    public static String[] generateKeys(ControlFactors.TemperatureLevel[] temperatureLevels,
+                                        ControlFactors.WindLevel[] windLevels,
+                                        ControlFactors.PrecipitationLevel[] precipitationLevels,
+                                        ControlFactors.TopographyLevel[] topographyLevels,
+                                        ControlFactors.WetnessLevel[] wetnessLevels,
+                                        ControlFactors.HumidityLevel[] humidityLevels,
+                                        ControlFactors.VegetationLevel[] vegetationLevels) {
         List<String> keys = new ArrayList<>();
 
-        for (TemperatureGenerator.TemperatureLevel temperatureLevel : temperatureLevels)
-            for (WindGenerator.WindLevel windLevel : windLevels)
-                for (PrecipitationGenerator.PrecipitationLevel precipitationLevel : precipitationLevels)
-                    for (LayeredController.TopographyLevel topographyLevel : topographyLevels)
-                        for (LayeredController.WetnessLevel wetnessLevel : wetnessLevels)
-                            for (LayeredController.HumidityLevel humidityLevel : humidityLevels)
-                                for (LayeredController.VegetationLevel vegetationLevel : vegetationLevels)
+        for (ControlFactors.TemperatureLevel temperatureLevel : temperatureLevels)
+            for (ControlFactors.WindLevel windLevel : windLevels)
+                for (ControlFactors.PrecipitationLevel precipitationLevel : precipitationLevels)
+                    for (ControlFactors.TopographyLevel topographyLevel : topographyLevels)
+                        for (ControlFactors.WetnessLevel wetnessLevel : wetnessLevels)
+                            for (ControlFactors.HumidityLevel humidityLevel : humidityLevels)
+                                for (ControlFactors.VegetationLevel vegetationLevel : vegetationLevels)
                                     keys.add(String.join(".", temperatureLevel.getKey(), windLevel.getKey(), precipitationLevel.getKey(),
                                             topographyLevel.getKey(), wetnessLevel.getKey(), humidityLevel.getKey(), vegetationLevel.getKey()));
         return keys.toArray(new String[keys.size()]);

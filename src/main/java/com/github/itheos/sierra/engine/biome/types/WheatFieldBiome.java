@@ -3,11 +3,8 @@ package com.github.itheos.sierra.engine.biome.types;
 import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.biome.BiomeController;
-import com.github.itheos.sierra.engine.biome.LayeredController;
+import com.github.itheos.sierra.engine.biome.ControlFactors;
 import com.github.itheos.sierra.engine.biome.SierraBiome;
-import com.github.itheos.sierra.engine.generator.climate.PrecipitationGenerator;
-import com.github.itheos.sierra.engine.generator.climate.TemperatureGenerator;
-import com.github.itheos.sierra.engine.generator.climate.WindGenerator;
 import com.github.itheos.sierra.engine.generator.ProceduralRock;
 import com.github.itheos.sierra.engine.generator.biome.WheatFieldGenerator;
 import com.github.itheos.sierra.utils.MathUtils;
@@ -31,21 +28,6 @@ public class WheatFieldBiome extends SierraBiome {
 
     private Random random;
     private WheatFieldGenerator generator;
-
-    private static TemperatureGenerator.TemperatureLevel[] temperatureLevels =
-            new TemperatureGenerator.TemperatureLevel[] { TemperatureGenerator.TemperatureLevel.LUKEWARM };
-    private static WindGenerator.WindLevel[] windLevels =
-            new WindGenerator.WindLevel[] { WindGenerator.WindLevel.CALM, WindGenerator.WindLevel.WINDY };
-    private static PrecipitationGenerator.PrecipitationLevel[] precipitationLevels =
-            new PrecipitationGenerator.PrecipitationLevel[] { PrecipitationGenerator.PrecipitationLevel.REGULAR_WET, PrecipitationGenerator.PrecipitationLevel.DRY };
-    private static LayeredController.TopographyLevel[] topographyLevels =
-            new LayeredController.TopographyLevel[] { LayeredController.TopographyLevel.FLAT, LayeredController.TopographyLevel.HILLY };
-    private static LayeredController.WetnessLevel[] wetnessLevels =
-            new LayeredController.WetnessLevel[] { LayeredController.WetnessLevel.DRY, LayeredController.WetnessLevel.WET };
-    private static LayeredController.HumidityLevel[] humidityLevels =
-            new LayeredController.HumidityLevel[] { LayeredController.HumidityLevel.HUMID };
-    private static LayeredController.VegetationLevel[] vegetationLevels =
-            new LayeredController.VegetationLevel[] { LayeredController.VegetationLevel.SOME };
 
     public WheatFieldBiome(SierraWorld world) {
         super(world, BiomeController.BiomeType.WHEAT_FIELDS);
@@ -143,8 +125,44 @@ public class WheatFieldBiome extends SierraBiome {
         return data;
     }
 
-    public static String[] getKeys() {
-        return StringUtils.generateKeys(temperatureLevels, windLevels, precipitationLevels, topographyLevels,
-                wetnessLevels, humidityLevels, vegetationLevels);
+    @Override
+    public String[] getKeys() {
+        return StringUtils.generateKeys(getTemperatureLevels(), getWindLevels(), getPrecipitationLevels(), getTopographyLevels(),
+                getWetnessLevels(), getHumidityLevels(), getVegetationLevels());
+    }
+
+    @Override
+    public ControlFactors.TemperatureLevel[] getTemperatureLevels() {
+        return new ControlFactors.TemperatureLevel[] { ControlFactors.TemperatureLevel.LUKEWARM, ControlFactors.TemperatureLevel.HOT };
+    }
+
+    @Override
+    public ControlFactors.WindLevel[] getWindLevels() {
+        return new ControlFactors.WindLevel[] { ControlFactors.WindLevel.CALM, ControlFactors.WindLevel.WINDY };
+    }
+
+    @Override
+    public ControlFactors.PrecipitationLevel[] getPrecipitationLevels() {
+        return new ControlFactors.PrecipitationLevel[] { ControlFactors.PrecipitationLevel.DRY, ControlFactors.PrecipitationLevel.REGULAR_WET };
+    }
+
+    @Override
+    public ControlFactors.TopographyLevel[] getTopographyLevels() {
+        return new ControlFactors.TopographyLevel[] { ControlFactors.TopographyLevel.FLAT, ControlFactors.TopographyLevel.HILLY };
+    }
+
+    @Override
+    public ControlFactors.WetnessLevel[] getWetnessLevels() {
+        return new ControlFactors.WetnessLevel[] { ControlFactors.WetnessLevel.DRY };
+    }
+
+    @Override
+    public ControlFactors.HumidityLevel[] getHumidityLevels() {
+        return new ControlFactors.HumidityLevel[] { ControlFactors.HumidityLevel.ARID, ControlFactors.HumidityLevel.HUMID };
+    }
+
+    @Override
+    public ControlFactors.VegetationLevel[] getVegetationLevels() {
+        return new ControlFactors.VegetationLevel[] { ControlFactors.VegetationLevel.SOME };
     }
 }

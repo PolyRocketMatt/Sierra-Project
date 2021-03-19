@@ -4,6 +4,7 @@ import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.generator.biome.BiomeGenerator;
+import com.github.itheos.sierra.engine.generator.climate.PrecipitationGenerator;
 import com.github.itheos.sierra.engine.generator.climate.TemperatureGenerator;
 import com.github.itheos.sierra.engine.generator.climate.WindGenerator;
 import com.github.itheos.sierra.exception.BiomeException;
@@ -109,7 +110,56 @@ public abstract class SierraBiome {
      * @return the keys that this biome accepts. Biomes can include duplicates
      * @throws SierraException if no keys have been defined
      */
-    public static String[] getKeys() throws SierraException {
+    public String[] getKeys() throws SierraException {
         throw new BiomeException("Could not define biome");
     }
+
+    /**
+     * Get the temperature levels for this biome.
+     *
+     * @return the temperature levels
+     */
+    public abstract ControlFactors.TemperatureLevel[] getTemperatureLevels();
+
+    /**
+     * Get the wind levels for this biome.
+     *
+     * @return the wind levels
+     */
+    public abstract ControlFactors.WindLevel[] getWindLevels();
+
+    /**
+     * Get the precipitation levels for this biome.
+     *
+     * @return the precipitation levels
+     */
+    public abstract ControlFactors.PrecipitationLevel[] getPrecipitationLevels();
+
+    /**
+     * Get the topography levels for this biome.
+     *
+     * @return the topography levels
+     */
+    public abstract ControlFactors.TopographyLevel[] getTopographyLevels();
+
+    /**
+     * Get the wetness levels for this biome.
+     *
+     * @return the wetness levels
+     */
+    public abstract ControlFactors.WetnessLevel[] getWetnessLevels();
+
+    /**
+     * Get the humidity levels for this biome.
+     *
+     * @return the humidity levels
+     */
+    public abstract ControlFactors.HumidityLevel[] getHumidityLevels();
+
+    /**
+     * Get the vegetation levels for this biome.
+     *
+     * @return the vegetation levels
+     */
+    public abstract ControlFactors.VegetationLevel[] getVegetationLevels();
 }

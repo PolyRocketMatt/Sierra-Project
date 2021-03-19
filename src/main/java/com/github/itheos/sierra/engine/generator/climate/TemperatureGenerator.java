@@ -1,6 +1,8 @@
 package com.github.itheos.sierra.engine.generator.climate;
 
 import com.github.itheos.sierra.Sierra;
+import com.github.itheos.sierra.engine.biome.BiomeControlFactor;
+import com.github.itheos.sierra.engine.biome.LayeredController;
 import com.github.itheos.sierra.math.noise.FBM;
 import com.github.itheos.sierra.math.noise.SimplexNoise;
 import com.github.itheos.sierra.utils.MathUtils;
@@ -13,53 +15,6 @@ import org.jetbrains.annotations.NotNull;
  */
 
 public class TemperatureGenerator extends ClimateGenerator {
-
-    /**
-     * Enum that contains all possible temperature levels
-     * for this generator.
-     */
-    public enum TemperatureLevel {
-        FREEZING("FREEZING", 0.0f),
-        COLD("COLD", 0.2f),
-        LUKEWARM("LUKEWARM", 0.4f),
-        HOT("HOT", 0.6f),
-        VERY_HOT("VERY_HOT", 0.8f);
-
-        /** The key for a temperature level.*/
-        private String key;
-
-        /** The corresponding noise value for this temperature level. */
-        private float level;
-
-        /**
-         * Initialize a new TemperatureLevel.
-         *
-         * @param key the key
-         * @param level the level
-         */
-        TemperatureLevel(String key, float level) {
-            this.key = key;
-            this.level = level;
-        }
-
-        /**
-         * Get the key representing this temperature level.
-         *
-         * @return the key
-         */
-        public String getKey() {
-            return key;
-        }
-
-        /**
-         * Get the level representing this temperature level.
-         *
-         * @return the level
-         */
-        public float getLevel() {
-            return level;
-        }
-    }
 
     /** Generator Variables. */
     private int octaves;

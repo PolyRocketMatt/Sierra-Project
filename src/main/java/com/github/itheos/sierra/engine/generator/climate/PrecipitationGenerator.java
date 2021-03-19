@@ -9,53 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class PrecipitationGenerator extends ClimateGenerator {
 
-    /**
-     * Enum that contains all possible temperature levels
-     * for this generator.
-     */
-    public enum PrecipitationLevel {
-        VERY_WET("VERY_WET", 0.0f),
-        WET("WET", 0.2f),
-        REGULAR_WET("REGULAR_WET", 0.4f),
-        DRY("DRY", 0.6f),
-        VERY_DRY("VERY_DRY", 0.8f);
-
-        /** The key for a precipitation level.*/
-        private String key;
-
-        /** The corresponding noise value for this precipitation level. */
-        private float level;
-
-        /**
-         * Initialize a new PrecipitationLevel.
-         *
-         * @param key the key
-         * @param level the level
-         */
-        PrecipitationLevel(String key, float level) {
-            this.key = key;
-            this.level = level;
-        }
-
-        /**
-         * Get the key representing this precipitation level.
-         *
-         * @return the key
-         */
-        public String getKey() {
-            return key;
-        }
-
-        /**
-         * Get the level representing this precipitation level.
-         *
-         * @return the level
-         */
-        public float getLevel() {
-            return level;
-        }
-    }
-
     /** Generator Utils. */
     private SimplexGenerator noise;
 

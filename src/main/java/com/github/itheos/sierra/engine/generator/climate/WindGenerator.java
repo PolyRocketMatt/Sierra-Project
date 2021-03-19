@@ -1,6 +1,8 @@
 package com.github.itheos.sierra.engine.generator.climate;
 
 import com.github.itheos.sierra.Sierra;
+import com.github.itheos.sierra.engine.biome.BiomeControlFactor;
+import com.github.itheos.sierra.engine.biome.LayeredController;
 import com.github.itheos.sierra.math.noise.FBM;
 import com.github.itheos.sierra.math.noise.SimplexNoise;
 import com.github.itheos.sierra.utils.MathUtils;
@@ -13,51 +15,6 @@ import org.jetbrains.annotations.NotNull;
  */
 
 public class WindGenerator extends ClimateGenerator {
-
-    /**
-     * Enum that contains all possible wind levels
-     * for this generator.
-     */
-    public enum WindLevel {
-        CALM("CALM", 0.0f),
-        WINDY("WINDY", 0.4f),
-        EXTREMELY_WINDY("EXTREMELY_WINDY", 0.8f);
-
-        /** The key for a wind level.*/
-        private String key;
-
-        /** The corresponding noise value for this wind level. */
-        private float level;
-
-        /**
-         * Initialize a new WindLevel.
-         *
-         * @param key the key
-         * @param level the level
-         */
-        WindLevel(String key, float level) {
-            this.key = key;
-            this.level = level;
-        }
-
-        /**
-         * Get the key representing this wind level.
-         *
-         * @return the key
-         */
-        public String getKey() {
-            return key;
-        }
-
-        /**
-         * Get the level representing this wind level.
-         *
-         * @return the level
-         */
-        public float getLevel() {
-            return level;
-        }
-    }
 
     /** Generator Variables. */
     private int directional, offset, octaves;
