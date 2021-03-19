@@ -38,6 +38,10 @@ public class SimplexGenerator extends ComputeNoise {
                 MathUtils.toFunction(1.0f), MathUtils.toFunction(1.0f));
     }
 
+    public int getOctaves() {
+        return octaves;
+    }
+
     @Override
     public float noise(float x, float z) {
         return fbm.compute(x, z);

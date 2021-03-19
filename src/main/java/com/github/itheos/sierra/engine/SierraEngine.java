@@ -3,9 +3,7 @@ package com.github.itheos.sierra.engine;
 import com.github.itheos.sierra.engine.generator.ChunkSchema;
 import com.github.itheos.sierra.engine.generator.SierraChunkGenerator;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 
 /**
@@ -41,6 +39,7 @@ public class SierraEngine {
      * @return a ChunkSchema generated for this chunk
      */
     public ChunkSchema getChunkSchema(int chunkX, int chunkZ) {
+        /*
         //  We calculate the total heightmap of the chunk
 
         //  We start with it's base
@@ -64,6 +63,9 @@ public class SierraEngine {
             }
 
         return new ChunkSchema(base, heightMap);
+         */
+
+        return null;
     }
 
     /**
@@ -77,6 +79,7 @@ public class SierraEngine {
      * @return the modified ChunkData that has now generated
      */
     public ChunkGenerator.ChunkData buildFromSchema(ChunkGenerator.ChunkData data, ChunkSchema schema, ChunkGenerator.BiomeGrid grid, int chunkX, int chunkZ) {
+        /*
         float[][][] base = schema.getBase();
         int[][] heightMap = schema.getHeightMap();
 
@@ -119,6 +122,10 @@ public class SierraEngine {
         }
 
         return data;
+
+         */
+
+        return null;
     }
 
     /**

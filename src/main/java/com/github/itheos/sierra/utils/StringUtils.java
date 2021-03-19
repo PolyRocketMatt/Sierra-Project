@@ -14,4 +14,8 @@ public class StringUtils {
                 ChatColor.BLUE + z + ChatColor.GRAY + "]";
     }
 
+    public static String toWorldsKey(String name) {
+        return "worlds." + name;
+    }
+
 }
