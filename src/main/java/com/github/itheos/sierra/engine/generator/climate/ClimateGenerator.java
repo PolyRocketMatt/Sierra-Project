@@ -11,6 +11,6 @@ import com.github.itheos.sierra.engine.generator.general.ComputeNoise;
 
 public abstract class ClimateGenerator extends ComputeNoise {
 
-    public abstract BiomeControlFactor translate(float value);
+    public abstract BiomeControlFactor translate(float x, float z);
 
 }

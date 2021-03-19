@@ -47,6 +47,10 @@ public class SimplexGenerator extends ComputeNoise {
         return fbm.compute(x, z);
     }
 
+    public float normalizedNoise(float x, float z) {
+        return noise(x, z) / max;
+    }
+
     @Override
     public float[][][] noise(@NotNull float[][] map, float bX, float bZ, int lX, int lZ) {
         return new float[lX][lZ][1];

@@ -14,6 +14,9 @@ import com.github.itheos.sierra.engine.generator.general.SimplexGenerator;
 
 public class LayeredController implements Controller {
 
+    /** Generator Variables. */
+    private float max;
+
     /** Simplex generators for topography, wetness, humidity and vegetation amounts. */
     private SimplexGenerator topographyController;
     private SimplexGenerator wetnessController;
@@ -32,6 +35,8 @@ public class LayeredController implements Controller {
         this.wetnessController = new SimplexGenerator(world.getConfig().getAsInteger(key + ".seeds.controllers.wetness"));
         this.humidityController = new SimplexGenerator(world.getConfig().getAsInteger(key + ".seeds.controllers.humidity"));
         this.vegetationController = new SimplexGenerator(world.getConfig().getAsInteger(key + ".seeds.controllers.vegetation"));
+
+        this.max = topographyController.trueMax(topographyController.getOctaves());
     }
 
     /**
@@ -71,17 +76,21 @@ public class LayeredController implements Controller {
     }
 
     @Override
-    public float[][][] compute(int chunkX, int chunkZ) {
-        float[][][] map = new float[16][16][4];
+    public BiomeControlFactor[][][] compute(int chunkX, int chunkZ) {
+        BiomeControlFactor[][][] map = new BiomeControlFactor[16][16][4];
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                float topography = topographyController.noise(chunkX + x, chunkZ + z);
-                float wetness = wetnessController.noise(chunkX + x, chunkZ + z);
-                float humidity = humidityController.noise(chunkX + x, chunkZ + z);
-                float vegetation = vegetationController.noise(chunkX + x, chunkZ + z);
+                ControlFactors.TopographyLevel topography =
+                        (ControlFactors.TopographyLevel) ControlFactors.TopographyLevel.translate(topographyController.normalizedNoise(chunkX + x, chunkZ + z));
+                ControlFactors.WetnessLevel wetness =
+                        (ControlFactors.WetnessLevel) ControlFactors.WetnessLevel.translate(wetnessController.normalizedNoise(chunkX + x, chunkZ + z));
+                ControlFactors.HumidityLevel humidity =
+                        (ControlFactors.HumidityLevel) ControlFactors.HumidityLevel.translate(humidityController.normalizedNoise(chunkX + x, chunkZ + z));
+                ControlFactors.VegetationLevel vegetation =
+                        (ControlFactors.VegetationLevel) ControlFactors.VegetationLevel.translate(vegetationController.normalizedNoise(chunkX + x, chunkZ + z));
 
-                map[x][z] = new float[] { topography, wetness, humidity, vegetation };
+                map[x][z] = new BiomeControlFactor[] { topography, wetness, humidity, vegetation };
             }
         }
 

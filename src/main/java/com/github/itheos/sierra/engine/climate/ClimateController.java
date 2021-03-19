@@ -2,6 +2,8 @@ package com.github.itheos.sierra.engine.climate;
 
 import com.github.itheos.sierra.engine.Controller;
 import com.github.itheos.sierra.engine.SierraWorld;
+import com.github.itheos.sierra.engine.biome.BiomeControlFactor;
+import com.github.itheos.sierra.engine.biome.ControlFactors;
 import com.github.itheos.sierra.engine.generator.climate.PrecipitationGenerator;
 import com.github.itheos.sierra.engine.generator.climate.TemperatureGenerator;
 import com.github.itheos.sierra.engine.generator.climate.WindGenerator;
@@ -72,16 +74,16 @@ public class ClimateController implements Controller {
     }
 
     @Override
-    public float[][][] compute(int chunkX, int chunkZ) {
-        float[][][] map = new float[16][16][4];
+    public BiomeControlFactor[][][] compute(int chunkX, int chunkZ) {
+        BiomeControlFactor[][][] map = new BiomeControlFactor[16][16][4];
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                float temp = temperatureGenerator.noise(chunkX + x, chunkZ + z);
-                float wind = windGenerator.noise(chunkX + x, chunkZ + z);
-                float precipitation = precipitationGenerator.noise(chunkX + x, chunkZ + z);
+                ControlFactors.TemperatureLevel temp = (ControlFactors.TemperatureLevel) temperatureGenerator.translate(chunkX + x, chunkZ + z);
+                ControlFactors.WindLevel wind = (ControlFactors.WindLevel) windGenerator.translate(chunkX + x, chunkZ + z);
+                ControlFactors.PrecipitationLevel precipitation = (ControlFactors.PrecipitationLevel) precipitationGenerator.translate(chunkX + x, chunkZ + z);
 
-                map[x][z] = new float[] { temp, wind, precipitation };
+                map[x][z] = new BiomeControlFactor[] { temp, wind, precipitation };
             }
         }
 

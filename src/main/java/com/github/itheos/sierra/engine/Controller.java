@@ -1,5 +1,7 @@
 package com.github.itheos.sierra.engine;
 
+import com.github.itheos.sierra.engine.biome.BiomeControlFactor;
+
 /**
  * Created by PolyRocketMatt on 18/03/2021.
  *
@@ -16,7 +18,7 @@ public interface Controller {
      * @param chunkZ the z coordinate of the chunk
      * @return an array of controller values for all blocks in the chunk
      */
-    float[][][] compute(int chunkX, int chunkZ);
+    BiomeControlFactor[][][] compute(int chunkX, int chunkZ);
 
 }
 

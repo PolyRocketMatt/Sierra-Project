@@ -62,8 +62,7 @@ public class ControlFactors {
             return null;
         }
 
-        @Override
-        public BiomeControlFactor translate(float value) {
+        public static BiomeControlFactor translate(float value) {
             for (TemperatureLevel level : values())
                 if (level.level.isInRange(value))
                     return level;
@@ -125,8 +124,7 @@ public class ControlFactors {
             return null;
         }
 
-        @Override
-        public BiomeControlFactor translate(float value) {
+        public static BiomeControlFactor translate(float value) {
             for (PrecipitationLevel level : values())
                 if (level.level.isInRange(value))
                     return level;
@@ -186,8 +184,7 @@ public class ControlFactors {
             return null;
         }
 
-        @Override
-        public BiomeControlFactor translate(float value) {
+        public static BiomeControlFactor translate(float value) {
             for (WindLevel level : values())
                 if (level.level.isInRange(value))
                     return level;
@@ -249,8 +246,7 @@ public class ControlFactors {
             return null;
         }
 
-        @Override
-        public BiomeControlFactor translate(float value) {
+        public static BiomeControlFactor translate(float value) {
             for (TopographyLevel level : values())
                 if (level.level.isInRange(value))
                     return level;
@@ -310,8 +306,7 @@ public class ControlFactors {
             return null;
         }
 
-        @Override
-        public BiomeControlFactor translate(float value) {
+        public static BiomeControlFactor translate(float value) {
             for (WetnessLevel level : values())
                 if (level.level.isInRange(value))
                     return level;
@@ -371,8 +366,7 @@ public class ControlFactors {
             return null;
         }
 
-        @Override
-        public BiomeControlFactor translate(float value) {
+        public static BiomeControlFactor translate(float value) {
             for (HumidityLevel level : values())
                 if (level.level.isInRange(value))
                     return level;
@@ -434,8 +428,7 @@ public class ControlFactors {
             return null;
         }
 
-        @Override
-        public BiomeControlFactor translate(float value) {
+        public static BiomeControlFactor translate(float value) {
             for (VegetationLevel level : values())
                 if (level.level.isInRange(value))
                     return level;

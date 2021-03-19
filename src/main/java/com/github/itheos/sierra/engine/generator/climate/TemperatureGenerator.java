@@ -2,6 +2,7 @@ package com.github.itheos.sierra.engine.generator.climate;
 
 import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.engine.biome.BiomeControlFactor;
+import com.github.itheos.sierra.engine.biome.ControlFactors;
 import com.github.itheos.sierra.engine.biome.LayeredController;
 import com.github.itheos.sierra.math.noise.FBM;
 import com.github.itheos.sierra.math.noise.SimplexNoise;
@@ -72,5 +73,10 @@ public class TemperatureGenerator extends ClimateGenerator {
         }
 
         return max;
+    }
+
+    @Override
+    public BiomeControlFactor translate(float x, float z) {
+        return ControlFactors.TemperatureLevel.translate(noise(x, z));
     }
 }

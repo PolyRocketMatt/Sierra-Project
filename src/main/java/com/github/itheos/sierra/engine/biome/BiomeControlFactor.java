@@ -14,12 +14,4 @@ public interface BiomeControlFactor {
      */
     BiomeControlFactor get(String key);
 
-    /**
-     * Get the control factor for the given value.
-     *
-     * @param value the value
-     * @return the control factor if present or null
-     */
-    BiomeControlFactor translate(float value);
-
 }

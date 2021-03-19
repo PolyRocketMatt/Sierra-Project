@@ -2,6 +2,7 @@ package com.github.itheos.sierra.engine.biome;
 
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.biome.types.WheatFieldBiome;
+import com.github.itheos.sierra.utils.ArrayUtils;
 import org.bukkit.block.Biome;
 
 import java.util.HashMap;
@@ -102,10 +103,16 @@ public class BiomeController {
     }
 
     public BiomeType[][] compute(int chunkX, int chunkZ) {
-        float[][][] climate = parent.getClimateController().compute(chunkX, chunkZ);
-        float[][][] factors = parent.getLayeredController().compute(chunkX, chunkZ);
+        BiomeControlFactor[][][] climate = parent.getClimateController().compute(chunkX, chunkZ);
+        BiomeControlFactor[][][] factors = parent.getLayeredController().compute(chunkX, chunkZ);
 
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                BiomeControlFactor[] controlFactors = ArrayUtils.mergeFactors(climate[x][z], factors[x][z]);
+            }
+        }
 
+        return null;
     }
 
 }

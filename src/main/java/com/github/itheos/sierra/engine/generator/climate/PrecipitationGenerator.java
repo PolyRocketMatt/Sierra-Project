@@ -1,5 +1,7 @@
 package com.github.itheos.sierra.engine.generator.climate;
 
+import com.github.itheos.sierra.engine.biome.BiomeControlFactor;
+import com.github.itheos.sierra.engine.biome.ControlFactors;
 import com.github.itheos.sierra.engine.generator.general.SimplexGenerator;
 import org.jetbrains.annotations.NotNull;
 
@@ -8,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
  */
 
 public class PrecipitationGenerator extends ClimateGenerator {
+
+    /** Generator Variables. */
+    private float max;
 
     /** Generator Utils. */
     private SimplexGenerator noise;
@@ -19,11 +24,12 @@ public class PrecipitationGenerator extends ClimateGenerator {
      */
     public PrecipitationGenerator(int seed) {
         this.noise = new SimplexGenerator(seed);
+        this.max = noise.trueMax(noise.getOctaves());
     }
 
     @Override
     public float noise(float x, float z) {
-        return noise.noise(x, z);
+        return noise.noise(x, z) / max;
     }
 
     @Override
@@ -34,5 +40,10 @@ public class PrecipitationGenerator extends ClimateGenerator {
     @Override
     public float trueMax(int octaves) {
         return noise.trueMax(noise.getOctaves());
+    }
+
+    @Override
+    public BiomeControlFactor translate(float x, float z) {
+        return ControlFactors.PrecipitationLevel.translate(noise(x, z));
     }
 }
