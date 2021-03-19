@@ -4,7 +4,6 @@ import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.SierraConfiguration;
 import com.github.itheos.sierra.engine.biome.BiomeController;
 import com.github.itheos.sierra.engine.biome.LayeredController;
-import com.github.itheos.sierra.engine.biome.types.WheatFieldBiome;
 import com.github.itheos.sierra.engine.climate.ClimateController;
 import com.github.itheos.sierra.engine.generator.general.BaseGenerator;
 

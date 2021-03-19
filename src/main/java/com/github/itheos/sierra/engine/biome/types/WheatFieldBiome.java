@@ -4,9 +4,10 @@ import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.biome.BiomeController;
 import com.github.itheos.sierra.engine.biome.SierraBiome;
+import com.github.itheos.sierra.engine.generator.climate.PrecipitationGenerator;
 import com.github.itheos.sierra.engine.generator.climate.TemperatureGenerator;
 import com.github.itheos.sierra.engine.generator.climate.WindGenerator;
-import com.github.itheos.sierra.engine.generator.general.ProceduralRock;
+import com.github.itheos.sierra.engine.generator.ProceduralRock;
 import com.github.itheos.sierra.engine.generator.biome.WheatFieldGenerator;
 import com.github.itheos.sierra.utils.MathUtils;
 import org.bukkit.Bukkit;
@@ -14,6 +15,8 @@ import org.bukkit.Material;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.generator.ChunkGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -29,10 +32,15 @@ public class WheatFieldBiome extends SierraBiome {
     private Random random;
     private WheatFieldGenerator generator;
 
+    private static TemperatureGenerator.TemperatureLevel[] temperatureLevels =
+            new TemperatureGenerator.TemperatureLevel[] { TemperatureGenerator.TemperatureLevel.LUKEWARM };
+    private static WindGenerator.WindLevel[] windLevels =
+            new WindGenerator.WindLevel[] { WindGenerator.WindLevel.CALM, WindGenerator.WindLevel.WINDY };
+    private static PrecipitationGenerator.PrecipitationLevel[] precipitationLevels =
+            new PrecipitationGenerator.PrecipitationLevel[] { PrecipitationGenerator.PrecipitationLevel.REGULAR_WET, PrecipitationGenerator.PrecipitationLevel.DRY };
+
     public WheatFieldBiome(SierraWorld world) {
-        super(world, BiomeController.BiomeType.WHEAT_FIELDS,
-                new TemperatureGenerator.TemperatureLevel[] { TemperatureGenerator.TemperatureLevel.LUKEWARM },
-                new WindGenerator.WindLevel[] { WindGenerator.WindLevel.CALM, WindGenerator.WindLevel.WINDY });
+        super(world, BiomeController.BiomeType.WHEAT_FIELDS);
 
         this.random = new Random();
         this.generator = new WheatFieldGenerator(world.getConfig().<Integer>get("worlds." + world.getName() + ".seeds.biome.wheat-fields"));
@@ -128,6 +136,12 @@ public class WheatFieldBiome extends SierraBiome {
     }
 
     public static String[] getKeys() {
-        return new String[] {};
+        List<String> keys = new ArrayList<>();
+
+        for (TemperatureGenerator.TemperatureLevel temperatureLevel : temperatureLevels)
+            for (WindGenerator.WindLevel windLevel : windLevels)
+                for (PrecipitationGenerator.PrecipitationLevel precipitationLevel : precipitationLevels)
+                    keys.add(String.join(".", temperatureLevel.getKey(), windLevel.getKey(), precipitationLevel.getKey()));
+        return keys.toArray(new String[keys.size()]);
     }
 }

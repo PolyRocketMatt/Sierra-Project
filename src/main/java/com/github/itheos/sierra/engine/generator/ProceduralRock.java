@@ -1,4 +1,4 @@
-package com.github.itheos.sierra.engine.generator.general;
+package com.github.itheos.sierra.engine.generator;
 
 import java.util.Random;
 

@@ -33,10 +33,6 @@ public abstract class SierraBiome {
     /** A list that contains all placeable assets for this biome. */
     protected ArrayList<PlaceableAsset> assets;
 
-    /** Climate related fields that specify the climate factors in this biome. */
-    protected TemperatureGenerator.TemperatureLevel[] temperatureLevels;
-    protected WindGenerator.WindLevel[] windLevels;
-
     /**
      * Initialize a new SierraBiome with the given world and
      * biome type.
@@ -44,15 +40,11 @@ public abstract class SierraBiome {
      * @param world the world
      * @param biome the biome type
      */
-    public SierraBiome(SierraWorld world, BiomeController.BiomeType biome, TemperatureGenerator.TemperatureLevel[] temperatureLevels,
-                       WindGenerator.WindLevel[] windLevels) {
+    public SierraBiome(SierraWorld world, BiomeController.BiomeType biome) {
         this.world = world;
         this.biome = biome;
         this.handler = Sierra.getHandlerManager().getAssetHandler();
         this.assets = new ArrayList<>();
-
-        this.temperatureLevels = temperatureLevels;
-        this.windLevels = windLevels;
 
         handler.getPlaceableAssets().forEach(asset -> {
             if (asset.getBiomes().contains(biome))
@@ -67,24 +59,6 @@ public abstract class SierraBiome {
      */
     public BiomeController.BiomeType getBiome() {
         return biome;
-    }
-
-    /**
-     * Get the temperature levels for this biome.
-     *
-     * @return the temperature level
-     */
-    public TemperatureGenerator.TemperatureLevel[] getTemperatureLevels() {
-        return temperatureLevels;
-    }
-
-    /**
-     * Get the wind levels for this biome.
-     *
-     * @return the wind level
-     */
-    public WindGenerator.WindLevel[] getWindLevels() {
-        return windLevels;
     }
 
     /**
