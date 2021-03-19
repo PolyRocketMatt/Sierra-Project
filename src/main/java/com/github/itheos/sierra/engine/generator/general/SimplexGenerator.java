@@ -1,7 +1,6 @@
 package com.github.itheos.sierra.engine.generator.general;
 
 import com.github.itheos.sierra.Sierra;
-import com.github.itheos.sierra.engine.generator.NoiseGenerator;
 import com.github.itheos.sierra.math.noise.FBM;
 import com.github.itheos.sierra.math.noise.SimplexNoise;
 import com.github.itheos.sierra.utils.MathUtils;
@@ -9,15 +8,24 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by PolyRocketMatt on 18/03/2021.
+ *
+ * Simple simplex generator for varied uses.
  */
 
 public class SimplexGenerator extends ComputeNoise {
 
+    /** Generator Variables. */
     private int octaves;
     private float scale, persistence, lacunarity, max;
 
+    /** Generator Utils. */
     private FBM fbm;
 
+    /**
+     * Initialize a new SimplexGenerator.
+     *
+     * @param seed the seed for the generator
+     */
     public SimplexGenerator(int seed) {
         this.octaves = Sierra.getGenerators().getAsInteger("generators.simplex.octaves");
         this.scale = Sierra.getGenerators().getAsInteger("generators.simplex.scale");

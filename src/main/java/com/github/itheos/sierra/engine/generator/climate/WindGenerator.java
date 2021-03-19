@@ -8,16 +8,72 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by PolyRocketMatt on 18/03/2021.
+ *
+ * Generator that generates wind maps.
  */
 
 public class WindGenerator extends ClimateGenerator {
 
+    /**
+     * Enum that contains all possible wind levels
+     * for this generator.
+     */
+    public enum WindLevel {
+        CALM("CALM", 0.0f),
+        WINDY("WINDY", 0.4f),
+        EXTREMELY_WINDY("EXTREMELY_WINDY", 0.8f);
+
+        /** The key for a wind level.*/
+        private String key;
+
+        /** The corresponding noise value for this wind level. */
+        private float level;
+
+        /**
+         * Initialize a new WindLevel.
+         *
+         * @param key the key
+         * @param level the level
+         */
+        WindLevel(String key, float level) {
+            this.key = key;
+            this.level = level;
+        }
+
+        /**
+         * Get the key representing this wind level.
+         *
+         * @return the key
+         */
+        public String getKey() {
+            return key;
+        }
+
+        /**
+         * Get the level representing this wind level.
+         *
+         * @return the level
+         */
+        public float getLevel() {
+            return level;
+        }
+    }
+
+    /** Generator Variables. */
     private int directional, offset, octaves;
     private float scale, persistence, lacunarity, max;
     private float warp;
 
+    /** Generator Utils. */
     private SimplexNoise noise, primaryX, primaryZ, directionalX, directionalZ;
 
+    /**
+     * Initialize a new WindGenerator.
+     *
+     * @param seed the seed for the generator
+     * @param directional the directional seed for the generator
+     * @param offset the offset used for this generator
+     */
     public WindGenerator(int seed, int directional, int offset) {
         this.directional = MathUtils.fromDoubleSeed(seed, directional);
         this.offset = offset;

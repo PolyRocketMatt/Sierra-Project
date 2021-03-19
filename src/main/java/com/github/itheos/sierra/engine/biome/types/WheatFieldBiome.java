@@ -4,6 +4,8 @@ import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.biome.BiomeController;
 import com.github.itheos.sierra.engine.biome.SierraBiome;
+import com.github.itheos.sierra.engine.generator.climate.TemperatureGenerator;
+import com.github.itheos.sierra.engine.generator.climate.WindGenerator;
 import com.github.itheos.sierra.engine.generator.general.ProceduralRock;
 import com.github.itheos.sierra.engine.generator.biome.WheatFieldGenerator;
 import com.github.itheos.sierra.utils.MathUtils;
@@ -16,6 +18,10 @@ import java.util.Random;
 
 /**
  * Created by PolyRocketMatt on 13/03/2021.
+ *
+ * Wheat Field Biome. An idyllic biome
+ * with fields of wheat mixed in with some
+ * roads and trees.
  */
 
 public class WheatFieldBiome extends SierraBiome {
@@ -24,7 +30,9 @@ public class WheatFieldBiome extends SierraBiome {
     private WheatFieldGenerator generator;
 
     public WheatFieldBiome(SierraWorld world) {
-        super(world, BiomeController.Biomes.WHEAT_FIELDS);
+        super(world, BiomeController.BiomeType.WHEAT_FIELDS,
+                new TemperatureGenerator.TemperatureLevel[] { TemperatureGenerator.TemperatureLevel.LUKEWARM },
+                new WindGenerator.WindLevel[] { WindGenerator.WindLevel.CALM, WindGenerator.WindLevel.WINDY });
 
         this.random = new Random();
         this.generator = new WheatFieldGenerator(world.getConfig().<Integer>get("worlds." + world.getName() + ".seeds.biome.wheat-fields"));
@@ -117,5 +125,9 @@ public class WheatFieldBiome extends SierraBiome {
         }
 
         return data;
+    }
+
+    public static String[] getKeys() {
+        return new String[] {};
     }
 }

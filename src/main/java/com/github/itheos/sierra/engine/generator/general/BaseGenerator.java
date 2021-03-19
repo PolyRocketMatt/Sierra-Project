@@ -9,18 +9,27 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by PolyRocketMatt on 13/03/2021.
+ *
+ * Generator that generates base maps.
  */
 
 public class BaseGenerator implements NoiseGenerator {
 
+    /** Generator Variables. */
     private final int multiplier;
     private final int octaves;
     private final float scale;
     private final float persistence, lacunarity;
     private final float max;
 
+    /** Generator Utils. */
     private SimplexNoise noise;
 
+    /**
+     * Initialize a new BaseGenerator.
+     *
+     * @param seed the seed for the generator
+     */
     public BaseGenerator(int seed) {
         this.multiplier = Sierra.getGenerators().getAsInteger("generators.base.multiplier");
         this.octaves = Sierra.getGenerators().getAsInteger("generators.base.octaves");

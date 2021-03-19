@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by PolyRocketMatt on 13/03/2021.
+ *
+ * Exception thrown when generating noise.
  */
 
 public class NoiseException extends SierraException {

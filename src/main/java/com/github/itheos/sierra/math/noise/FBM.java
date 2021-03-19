@@ -6,7 +6,11 @@ import com.github.itheos.sierra.utils.MathUtils;
 /**
  * Created by PolyRocketMatt on 13/03/2021.
  *
- * This class provides
+ * This class provides a fractional brownian
+ * motion for the given parameters. These parameters
+ * include octaves, scale, persistence, lacunarity,
+ * amplitude and frequency as well as a the type
+ * of noise and filter for the noise.
  */
 
 public class FBM {
@@ -63,6 +67,22 @@ public class FBM {
         this.frequency = frequency;
     }
 
+    /**
+     * Compute filtered FBM for coordinates x and z
+     * with the given parameters.
+     *
+     * @param noise the type of noise
+     * @param filter the filter of noise
+     * @param octaves the amount of octaves
+     * @param scale the scale of the noise
+     * @param persistence the persistence
+     * @param lacunarity the lacunarity
+     * @param amplitude the amplitude
+     * @param frequency the frequency
+     * @param x the x coordinate
+     * @param z the z coordinate
+     * @return the noise value computed with FBM
+     */
     public static float compute(Noise noise, NoiseFilter filter, int octaves, Function<Float> scale, Function<Float> persistence, Function<Float> lacunarity,
                                 Function<Float> amplitude, Function<Float> frequency, float x, float z) {
         float amp = amplitude.call();
@@ -87,7 +107,7 @@ public class FBM {
      *
      * @param x the x coordinate
      * @param z the z coordinate
-     * @return the noise value computed by the FBM
+     * @return the noise value computed with FBM
      */
     public float compute(float x, float z) {
         float amp = amplitude.call();
@@ -115,7 +135,7 @@ public class FBM {
      * @param bZ the base z coordinate of the region
      * @param lX the length of the region
      * @param lZ the depth of the region
-     * @return an array of lX x lZ noise values computed by the FBM
+     * @return an array of lX x lZ noise values computed with FBM
      */
     public float[][] preCompute(float bX, float bZ, int lX, int lZ) {
         float[][] preComputation = new float[lX][lZ];
@@ -125,25 +145,5 @@ public class FBM {
                 preComputation[x][z] = compute(bX + x, bZ + z);
 
         return preComputation;
-    }
-
-    public float getTrueMax() {
-        float max = 0.0f;
-        float amp = 1.0f;
-
-        for (int i = 0; i < octaves; i++) {
-            max += 1.0f * amp;
-            amp *= persistence.call(max);
-        }
-
-        return max;
-    }
-
-    public void setNoise(Noise noise) {
-        this.noise = noise;
-    }
-
-    public void setFilter(NoiseFilter filter) {
-        this.filter = filter;
     }
 }

@@ -8,19 +8,29 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by PolyRocketMatt on 13/03/2021.
+ *
+ * Biome generator that drives the generation
+ * of the Wheat Field biome.
  */
 
 public class WheatFieldGenerator extends BiomeGenerator {
 
+    /** Generation Variables. */
     private final int multiplier;
     private final int octaves;
     private final float scale;
     private final float persistence, lacunarity, max;
     private final float sInfluence, dInfluence;
 
+    /** Generation Utils. */
     private FBM fbm;
     private SimplexNoise noise;
 
+    /**
+     * Initialize a new WheatFieldGenerator.
+     *
+     * @param seed the seed for the generator
+     */
     public WheatFieldGenerator(int seed) {
         this.multiplier = Sierra.getGenerators().<Integer>get("generators.biome.wheat-field.multiplier");
         this.octaves = Sierra.getGenerators().<Integer>get("generators.biome.wheat-field.octaves");

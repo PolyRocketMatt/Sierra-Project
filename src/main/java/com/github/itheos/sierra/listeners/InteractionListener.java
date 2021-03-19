@@ -3,7 +3,6 @@ package com.github.itheos.sierra.listeners;
 import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.engine.generator.ChunkSchema;
 import com.github.itheos.sierra.factories.ItemFactory;
-import com.github.itheos.sierra.handlers.EngineHandler;
 import com.github.itheos.sierra.handlers.GuiHandler;
 import com.github.itheos.sierra.utils.ItemUtils;
 import com.github.itheos.sierra.utils.MathUtils;

@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 /**
  * Created by PolyRocketMatt on 14/03/2021.
+ *
+ * Handler that manages engines.
  */
 
 public class EngineHandler extends Handler {

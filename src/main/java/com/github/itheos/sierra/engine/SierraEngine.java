@@ -10,18 +10,36 @@ import org.bukkit.generator.ChunkGenerator;
 
 /**
  * Created by PolyRocketMatt on 14/03/2021.
+ *
+ * The main engine that creates height-maps and
+ * biomes.
  */
 
 public class SierraEngine {
 
+    /** The chunk generator the engine uses. */
     private SierraChunkGenerator generator;
+
+    /** The parent world for the engine. */
     private SierraWorld world;
 
+    /**
+     * Initialize a new SierraEngine.
+     *
+     * @param generator the chunk generator to use
+     */
     public SierraEngine(SierraChunkGenerator generator) {
         this.generator = generator;
         this.world = generator.getSierraWorld();
     }
 
+    /**
+     * Create a new ChunkSchema for given chunk coordinates.
+     *
+     * @param chunkX the x coordinate of the chunk
+     * @param chunkZ the z coordinate of the chunk
+     * @return a ChunkSchema generated for this chunk
+     */
     public ChunkSchema getChunkSchema(int chunkX, int chunkZ) {
         //  We calculate the total heightmap of the chunk
 
@@ -48,6 +66,16 @@ public class SierraEngine {
         return new ChunkSchema(base, heightMap);
     }
 
+    /**
+     * Build a chunk based of a schema.
+     *
+     * @param data the ChunkData provided by Spigot
+     * @param schema the ChunkSchema provided by the engine
+     * @param grid the BiomeGrid provided by Spigot
+     * @param chunkX the x coordinate of the chunk
+     * @param chunkZ the z coordinate of the chunk
+     * @return the modified ChunkData that has now generated
+     */
     public ChunkGenerator.ChunkData buildFromSchema(ChunkGenerator.ChunkData data, ChunkSchema schema, ChunkGenerator.BiomeGrid grid, int chunkX, int chunkZ) {
         float[][][] base = schema.getBase();
         int[][] heightMap = schema.getHeightMap();
@@ -93,6 +121,16 @@ public class SierraEngine {
         return data;
     }
 
+    /**
+     * Create the ChunkData for given chunk coordinates.
+     *
+     * @param world the Bukkit world
+     * @param sierraWorld the parent Sierra world
+     * @param cX the x coordinate of the chunk
+     * @param cZ the z coordinate of the chunk
+     * @param grid the grid provided by Spigot
+     * @return final ChunkData for the given chunk
+     */
     public ChunkGenerator.ChunkData getChunkData(World world, SierraWorld sierraWorld, int cX, int cZ, ChunkGenerator.BiomeGrid grid) {
         int chunkX = cX * 16, chunkZ = cZ * 16;
 

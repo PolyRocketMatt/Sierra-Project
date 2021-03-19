@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * Created by PolyRocketMatt on 13/03/2021.
+ *
+ * Handler that manages generators.
  */
 
 public class GeneratorHandler extends Handler {

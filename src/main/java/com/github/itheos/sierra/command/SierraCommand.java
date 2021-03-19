@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Created by PolyRocketMatt on 11/03/2021.
  *
- * A command that is part of Unreal.
+ * Represents a command that is part of Sierra.
  */
 
 public abstract class SierraCommand {

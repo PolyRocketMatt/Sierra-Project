@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Created by PolyRocketMatt on 15/03/2021.
+ *
+ * Handle used for handlers that process JSON.
  */
 
 public class JSONHandle extends Handle {

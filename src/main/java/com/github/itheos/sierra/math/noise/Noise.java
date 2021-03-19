@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by PolyRocketMatt on 12/03/2021.
+ *
+ * Abstract noise implementation for different noise types.
  */
 
 public abstract class Noise {

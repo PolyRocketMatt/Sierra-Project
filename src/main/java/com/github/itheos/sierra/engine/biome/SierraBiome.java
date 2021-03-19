@@ -4,30 +4,55 @@ import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.generator.biome.BiomeGenerator;
+import com.github.itheos.sierra.engine.generator.climate.TemperatureGenerator;
+import com.github.itheos.sierra.engine.generator.climate.WindGenerator;
+import com.github.itheos.sierra.exception.BiomeException;
+import com.github.itheos.sierra.exception.SierraException;
 import com.github.itheos.sierra.handlers.AssetHandler;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by PolyRocketMatt on 13/03/2021.
+ *
+ * Represents a biome that is part of Sierra.
  */
 
 public abstract class SierraBiome {
 
+    /** The world this biome instance is part of. */
     protected SierraWorld world;
-    protected BiomeController.Biomes biome;
-    protected BiomeController.BiomeTag tag;
+
+    /** The type of biome this biome controls. */
+    protected BiomeController.BiomeType biome;
+
+    /** An instance of the asset handler to quickly fetch allowed assets for this biome. */
     protected AssetHandler handler;
+
+    /** A list that contains all placeable assets for this biome. */
     protected ArrayList<PlaceableAsset> assets;
 
-    public SierraBiome(SierraWorld world, BiomeController.Biomes biome, BiomeController.BiomeTag tag) {
+    /** Climate related fields that specify the climate factors in this biome. */
+    protected TemperatureGenerator.TemperatureLevel[] temperatureLevels;
+    protected WindGenerator.WindLevel[] windLevels;
+
+    /**
+     * Initialize a new SierraBiome with the given world and
+     * biome type.
+     *
+     * @param world the world
+     * @param biome the biome type
+     */
+    public SierraBiome(SierraWorld world, BiomeController.BiomeType biome, TemperatureGenerator.TemperatureLevel[] temperatureLevels,
+                       WindGenerator.WindLevel[] windLevels) {
         this.world = world;
         this.biome = biome;
-        this.tag = tag;
         this.handler = Sierra.getHandlerManager().getAssetHandler();
         this.assets = new ArrayList<>();
+
+        this.temperatureLevels = temperatureLevels;
+        this.windLevels = windLevels;
 
         handler.getPlaceableAssets().forEach(asset -> {
             if (asset.getBiomes().contains(biome))
@@ -40,17 +65,26 @@ public abstract class SierraBiome {
      *
      * @return the biome
      */
-    public BiomeController.Biomes getBiome() {
+    public BiomeController.BiomeType getBiome() {
         return biome;
     }
 
     /**
-     * Get the biome tag for this biome.
+     * Get the temperature levels for this biome.
      *
-     * @return the tag
+     * @return the temperature level
      */
-    public BiomeController.BiomeTag getTag() {
-        return tag;
+    public TemperatureGenerator.TemperatureLevel[] getTemperatureLevels() {
+        return temperatureLevels;
+    }
+
+    /**
+     * Get the wind levels for this biome.
+     *
+     * @return the wind level
+     */
+    public WindGenerator.WindLevel[] getWindLevels() {
+        return windLevels;
     }
 
     /**
@@ -94,4 +128,14 @@ public abstract class SierraBiome {
      */
     public abstract ChunkGenerator.ChunkData populate(ChunkGenerator.ChunkData data, int x, int y, int z);
 
+    /**
+     * Get the allowed keys that result from
+     * biome generation.
+     *
+     * @return the keys that this biome accepts. Biomes can include duplicates
+     * @throws SierraException if no keys have been defined
+     */
+    public static String[] getKeys() throws SierraException {
+        throw new BiomeException("Could not define biome");
+    }
 }

@@ -2,6 +2,9 @@ package com.github.itheos.sierra.engine.generator.general;
 
 import java.util.Random;
 
+/**
+ * Lode's Class
+ */
 public class ProceduralRock {
 
     private static void removeAllDirections(int[][][] rock, int size, float erosionLvl){
