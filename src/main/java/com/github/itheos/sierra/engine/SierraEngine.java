@@ -1,8 +1,10 @@
 package com.github.itheos.sierra.engine;
 
+import com.github.itheos.sierra.engine.biome.BiomeController;
 import com.github.itheos.sierra.engine.generator.ChunkSchema;
 import com.github.itheos.sierra.engine.generator.SierraChunkGenerator;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.generator.ChunkGenerator;
 
@@ -39,33 +41,29 @@ public class SierraEngine {
      * @return a ChunkSchema generated for this chunk
      */
     public ChunkSchema getChunkSchema(int chunkX, int chunkZ) {
-        /*
-        //  We calculate the total heightmap of the chunk
+        //  Calculate base map
+        float[][][] baseMap = world.getBaseGenerator().noise(new float[16][16], chunkX, chunkZ, 16, 16);
 
-        //  We start with it's base
-        float[][][] base = world.getBaseGenerator().noise(new float[16][16], chunkX, chunkZ, 16, 16);
+        //  Calculate biome mapping
+        BiomeController.BiomeType[][] biomeMap = world.getBiomeController().compute(chunkX, chunkZ);
+
+        //  Initialize the height-map
         int[][] heightMap = new int[16][16];
 
-        //  Overwrite Vanilla biomes
-        //  Determine biomes, heights and store in a 24x24 array
-        //  (Optional) Bake chunk
-        //  Build chunk
-
-        for (int x = 0; x < 16; x++)
+        //  Loop over the chunk blocks
+        for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                heightMap[x][z] = (int) (base[x][z][0] * world.getBaseGenerator().getMultiplier());
+                //  Create the base height at this coordinate
+                heightMap[x][z] = (int) (baseMap[x][z][0] * world.getBaseGenerator().getMultiplier());
 
-                //  Determine biome
-                heightMap[x][z] = (base[x][z][0] >= 0.98f) ?
-                        world.getWheatFieldBiome()
-                                .computeBiome(chunkX, chunkZ, x, z, heightMap[x][z], base[x][z][0]) :
-                        heightMap[x][z];
+                //  If a biome at the position has been found, increase the height-map according to the biome
+                if (biomeMap[x][z] != null)
+                    heightMap[x][z] += world.getBiomeController().getInstance(biomeMap[x][z]).computeBiome(chunkX, chunkZ, x, z, heightMap[x][z], baseMap[x][z][0]);
             }
+        }
 
-        return new ChunkSchema(base, heightMap);
-         */
-
-        return null;
+        //  Return a new ChunkSchema
+        return new ChunkSchema(baseMap, heightMap, biomeMap);
     }
 
     /**
@@ -79,6 +77,26 @@ public class SierraEngine {
      * @return the modified ChunkData that has now generated
      */
     public ChunkGenerator.ChunkData buildFromSchema(ChunkGenerator.ChunkData data, ChunkSchema schema, ChunkGenerator.BiomeGrid grid, int chunkX, int chunkZ) {
+        float[][][] baseMap = schema.getBaseMap();
+        int[][] heightMap = schema.getHeightMap();
+        BiomeController.BiomeType[][] biomeMap = schema.getBiomeMap();
+
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                float baseValue = baseMap[x][z][0];
+                int heightValue = heightMap[x][z];
+                BiomeController.BiomeType biome = biomeMap[x][z];
+
+                if (biome != null) {
+                    data = world.getBiomeController().getInstance(biome).buildBiome(data, x, heightValue, z);
+                    data = world.getBiomeController().getInstance(biome).populate(data, x, heightValue, z);
+                } else
+                    data.setBlock(x, heightValue, z, Material.GRASS_BLOCK);
+            }
+        }
+
+        return data;
+
         /*
         float[][][] base = schema.getBase();
         int[][] heightMap = schema.getHeightMap();
@@ -122,10 +140,7 @@ public class SierraEngine {
         }
 
         return data;
-
-         */
-
-        return null;
+        */
     }
 
     /**

@@ -79,4 +79,8 @@ public class BaseGenerator implements NoiseGenerator {
 
         return max;
     }
+
+    public int getMultiplier() {
+        return multiplier;
+    }
 }

@@ -84,6 +84,9 @@ public class BiomeController {
     /** A mapping that contains all possible combination of climate factors mapped to their respective biomes. */
     private Map<String, SierraBiome> biomeKeyMap;
 
+    /** A mapping that maps a BiomeType on an instance of a SierraBiome. */
+    private Map<BiomeType, SierraBiome> biomeTypeMap;
+
     /**
      * Initialize a new BiomeController.
      *
@@ -92,8 +95,10 @@ public class BiomeController {
     public BiomeController(SierraWorld parent) {
         this.parent = parent;
         this.biomeKeyMap = new HashMap<>();
+        this.biomeTypeMap = new HashMap<>();
 
         loadKeyMap();
+        loadTypeMap();
     }
 
     /**
@@ -101,6 +106,15 @@ public class BiomeController {
      */
     private void loadKeyMap() {
         WheatFieldBiome.register(new WheatFieldBiome(parent), biomeKeyMap);
+    }
+
+    /**
+     * Load the type map for the biome mapping.
+     */
+    private void loadTypeMap() {
+        //  We only map biomes that have keys associated to them
+        for (SierraBiome key : biomeKeyMap.values())
+            biomeTypeMap.put(key.biome, key);
     }
 
     public BiomeType[][] compute(int chunkX, int chunkZ) {
@@ -120,6 +134,16 @@ public class BiomeController {
         }
 
         return types;
+    }
+
+    /**
+     * Get an instance of the given biome-type.
+     *
+     * @param type the biome-type
+     * @return an instance of a biome
+     */
+    public SierraBiome getInstance(BiomeType type) {
+        return biomeTypeMap.getOrDefault(type, null);
     }
 
 }

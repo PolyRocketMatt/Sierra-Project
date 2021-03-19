@@ -65,7 +65,7 @@ public class InteractionListener implements Listener {
                     int relX = (int) MathUtils.abs(block.getX() - (chunk.getX() * 16));
                     int relZ = (int) MathUtils.abs(block.getZ() - (chunk.getZ() * 16));
 
-                    float[][][] base = schema.getBase();
+                    float[][][] base = schema.getBaseMap();
                     int[][] heightMap = schema.getHeightMap();
 
                     try {
