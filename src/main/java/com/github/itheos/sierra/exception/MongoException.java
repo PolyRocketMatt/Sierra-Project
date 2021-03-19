@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by PolyRocketMatt on 15/03/2021.
+ *
+ * Exception thrown when a database error occurs.
  */
 
 public class MongoException extends SierraException {

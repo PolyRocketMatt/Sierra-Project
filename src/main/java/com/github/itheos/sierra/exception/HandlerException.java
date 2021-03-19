@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by PolyRocketMatt on 11/03/2021.
+ *
+ * Exception thrown by a handler.
  */
 
 public class HandlerException extends SierraException {

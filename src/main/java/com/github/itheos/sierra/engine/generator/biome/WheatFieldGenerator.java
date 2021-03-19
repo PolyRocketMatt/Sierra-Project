@@ -1,7 +1,6 @@
 package com.github.itheos.sierra.engine.generator.biome;
 
 import com.github.itheos.sierra.Sierra;
-import com.github.itheos.sierra.engine.generator.BiomeGenerator;
 import com.github.itheos.sierra.math.noise.FBM;
 import com.github.itheos.sierra.math.noise.SimplexNoise;
 import com.github.itheos.sierra.utils.MathUtils;
@@ -9,28 +8,37 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by PolyRocketMatt on 13/03/2021.
+ *
+ * Biome generator that drives the generation
+ * of the Wheat Field biome.
  */
 
 public class WheatFieldGenerator extends BiomeGenerator {
 
+    /** Generation Variables. */
     private final int multiplier;
     private final int octaves;
     private final float scale;
-    private final float persistence, lacunarity;
+    private final float persistence, lacunarity, max;
     private final float sInfluence, dInfluence;
-    private final float max;
 
+    /** Generation Utils. */
     private FBM fbm;
     private SimplexNoise noise;
 
+    /**
+     * Initialize a new WheatFieldGenerator.
+     *
+     * @param seed the seed for the generator
+     */
     public WheatFieldGenerator(int seed) {
         this.multiplier = Sierra.getGenerators().<Integer>get("generators.biome.wheat-field.multiplier");
         this.octaves = Sierra.getGenerators().<Integer>get("generators.biome.wheat-field.octaves");
         this.scale = Sierra.getGenerators().getAsFloat("generators.biome.wheat-field.scale");
         this.persistence = Sierra.getGenerators().getAsFloat("generators.biome.wheat-field.persistence");
         this.lacunarity = Sierra.getGenerators().getAsFloat("generators.biome.wheat-field.lacunarity");
-        this.sInfluence = Sierra.getGenerators().getAsFloat("generators.biome.wheat-field.s-influence");
-        this.dInfluence = Sierra.getGenerators().getAsFloat("generators.biome.wheat-field.d-influence");
+        this.sInfluence = Sierra.getGenerators().getAsFloat("generators.biome.wheat-field.straight-neighbour-influence");
+        this.dInfluence = Sierra.getGenerators().getAsFloat("generators.biome.wheat-field.diagonal-neightbour-influence");
         this.max = trueMax(octaves);
 
         this.noise = new SimplexNoise(seed);

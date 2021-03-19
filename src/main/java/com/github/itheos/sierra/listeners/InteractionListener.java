@@ -3,7 +3,6 @@ package com.github.itheos.sierra.listeners;
 import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.engine.generator.ChunkSchema;
 import com.github.itheos.sierra.factories.ItemFactory;
-import com.github.itheos.sierra.handlers.EngineHandler;
 import com.github.itheos.sierra.handlers.GuiHandler;
 import com.github.itheos.sierra.utils.ItemUtils;
 import com.github.itheos.sierra.utils.MathUtils;
@@ -43,8 +42,7 @@ public class InteractionListener implements Listener {
                 event.setCancelled(true);
 
                 Player player = event.getPlayer();
-                Objects.requireNonNull(Sierra.getHandlerManager().<GuiHandler>getAsPredefined("GuiHandler"))
-                        .getInterface(player, GuiHandler.GUI.DEBUG).show(player);
+                Sierra.getHandlerManager().getGuiHandler().getInterface(player, GuiHandler.GUI.DEBUG).show(player);
             }
 
             if (ItemUtils.isItem(event.getItem(), ItemFactory.DEBUG_STICK)) {
@@ -52,7 +50,7 @@ public class InteractionListener implements Listener {
 
                 Player player = event.getPlayer();
                 Chunk chunk = player.getWorld().getChunkAt(player.getLocation());
-                ChunkSchema schema = Objects.requireNonNull(Sierra.getHandlerManager().<EngineHandler>getAsPredefined("EngineHandler"))
+                ChunkSchema schema = Sierra.getHandlerManager().getEngineHandler()
                         .get(event.getPlayer().getWorld().getName()).getChunkSchema(chunk.getX() * 16, chunk.getZ() * 16);
 
                 if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK)

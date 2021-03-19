@@ -1,6 +1,7 @@
-package com.github.itheos.sierra.engine.generator;
+package com.github.itheos.sierra.engine.generator.general;
 
 import com.github.itheos.sierra.Sierra;
+import com.github.itheos.sierra.engine.generator.NoiseGenerator;
 import com.github.itheos.sierra.math.noise.FBM;
 import com.github.itheos.sierra.math.noise.SimplexNoise;
 import com.github.itheos.sierra.utils.MathUtils;
@@ -8,21 +9,30 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by PolyRocketMatt on 13/03/2021.
+ *
+ * Generator that generates base maps.
  */
 
 public class BaseGenerator implements NoiseGenerator {
 
+    /** Generator Variables. */
     private final int multiplier;
     private final int octaves;
     private final float scale;
     private final float persistence, lacunarity;
     private final float max;
 
+    /** Generator Utils. */
     private SimplexNoise noise;
 
+    /**
+     * Initialize a new BaseGenerator.
+     *
+     * @param seed the seed for the generator
+     */
     public BaseGenerator(int seed) {
-        this.multiplier = Sierra.getGenerators().<Integer>get("generators.base.multiplier");
-        this.octaves = Sierra.getGenerators().<Integer>get("generators.base.octaves");
+        this.multiplier = Sierra.getGenerators().getAsInteger("generators.base.multiplier");
+        this.octaves = Sierra.getGenerators().getAsInteger("generators.base.octaves");
         this.scale = Sierra.getGenerators().getAsFloat("generators.base.scale");
         this.persistence = Sierra.getGenerators().getAsFloat("generators.base.persistence");
         this.lacunarity = Sierra.getGenerators().getAsFloat("generators.base.lacunarity");

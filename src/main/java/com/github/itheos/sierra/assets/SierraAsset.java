@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 /**
  * Created by PolyRocketMatt on 15/03/2021.
+ *
+ * Java POJO to support Jackson's JSON mapping
+ * onto Java classes. This POJO is specifically
+ * made to store a complete asset when pulled
+ * from the database.
  */
 
 public class SierraAsset {

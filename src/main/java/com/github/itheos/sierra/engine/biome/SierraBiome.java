@@ -3,28 +3,47 @@ package com.github.itheos.sierra.engine.biome;
 import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
-import com.github.itheos.sierra.engine.generator.BiomeGenerator;
+import com.github.itheos.sierra.engine.generator.biome.BiomeGenerator;
+import com.github.itheos.sierra.engine.generator.climate.TemperatureGenerator;
+import com.github.itheos.sierra.engine.generator.climate.WindGenerator;
+import com.github.itheos.sierra.exception.BiomeException;
+import com.github.itheos.sierra.exception.SierraException;
 import com.github.itheos.sierra.handlers.AssetHandler;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by PolyRocketMatt on 13/03/2021.
+ *
+ * Represents a biome that is part of Sierra.
  */
 
 public abstract class SierraBiome {
 
+    /** The world this biome instance is part of. */
     protected SierraWorld world;
-    protected BiomeManager.Biomes biome;
+
+    /** The type of biome this biome controls. */
+    protected BiomeController.BiomeType biome;
+
+    /** An instance of the asset handler to quickly fetch allowed assets for this biome. */
     protected AssetHandler handler;
+
+    /** A list that contains all placeable assets for this biome. */
     protected ArrayList<PlaceableAsset> assets;
 
-    public SierraBiome(SierraWorld world, BiomeManager.Biomes biome) {
+    /**
+     * Initialize a new SierraBiome with the given world and
+     * biome type.
+     *
+     * @param world the world
+     * @param biome the biome type
+     */
+    public SierraBiome(SierraWorld world, BiomeController.BiomeType biome) {
         this.world = world;
         this.biome = biome;
-        this.handler = Objects.requireNonNull(Sierra.getHandlerManager().<AssetHandler>getAsPredefined("AssetHandler"));
+        this.handler = Sierra.getHandlerManager().getAssetHandler();
         this.assets = new ArrayList<>();
 
         handler.getPlaceableAssets().forEach(asset -> {
@@ -34,20 +53,11 @@ public abstract class SierraBiome {
     }
 
     /**
-     * Get the SierraWorld this biome instance belongs to.
-     *
-     * @return the world
-     */
-    public SierraWorld getWorld() {
-        return world;
-    }
-
-    /**
      * Get the actual biome representation.
      *
      * @return the biome
      */
-    public BiomeManager.Biomes getBiome() {
+    public BiomeController.BiomeType getBiome() {
         return biome;
     }
 
@@ -92,4 +102,14 @@ public abstract class SierraBiome {
      */
     public abstract ChunkGenerator.ChunkData populate(ChunkGenerator.ChunkData data, int x, int y, int z);
 
+    /**
+     * Get the allowed keys that result from
+     * biome generation.
+     *
+     * @return the keys that this biome accepts. Biomes can include duplicates
+     * @throws SierraException if no keys have been defined
+     */
+    public static String[] getKeys() throws SierraException {
+        throw new BiomeException("Could not define biome");
+    }
 }

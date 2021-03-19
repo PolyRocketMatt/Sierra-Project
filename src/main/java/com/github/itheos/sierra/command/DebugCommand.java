@@ -9,6 +9,9 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by PolyRocketMatt on 11/03/2021.
+ *
+ * Debug Command allows to open the debug menu
+ * to debug Sierra while it is generating.
  */
 
 @CommandInfo(

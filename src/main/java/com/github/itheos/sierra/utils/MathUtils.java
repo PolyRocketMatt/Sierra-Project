@@ -16,17 +16,15 @@ public class MathUtils {
     private static final float PI = 3.14159265358979323846f;
     private static final Random random = new Random();
 
-    public static Random getRandom() {
-        return random;
-    }
-
     public static int intSeed() {
         return random.nextInt(2 << 28);
     }
 
-    public static int fromSeed(int seed) {
-        return seed / intSeed() + intSeed() / intSeed();
-    }
+    public static int offset(int max) { return random.nextInt(max); }
+
+    public static int fromSeedVolatile(int seed) { return seed % (seed / 10) * (seed % 2); }
+
+    public static int fromDoubleSeed(int s1, int s2) { return (s1 + s2) / (s1 % s2); }
 
     /**
      * SmoothStep function on value t using fifth-degree polynomial.

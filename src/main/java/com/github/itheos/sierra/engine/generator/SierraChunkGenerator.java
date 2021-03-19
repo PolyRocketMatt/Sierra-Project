@@ -34,10 +34,10 @@ public class SierraChunkGenerator extends org.bukkit.generator.ChunkGenerator {
         this.state = ChunkGenState.RUNNING;
 
         Sierra.getDefaultLogger().log("Created new generator for " + sierraWorld.getName());
-        Objects.requireNonNull(Sierra.getHandlerManager().<GeneratorHandler>getAsPredefined("GeneratorHandler")).addGenerator(this);
-        Objects.requireNonNull(Sierra.getHandlerManager().<EngineHandler>getAsPredefined("EngineHandler")).add(name, new SierraEngine(this));
+        Sierra.getHandlerManager().getGeneratorHandler().addGenerator(this);
+        Sierra.getHandlerManager().getEngineHandler().add(name, new SierraEngine(this));
 
-        this.engine = Objects.requireNonNull(Sierra.getHandlerManager().<EngineHandler>getAsPredefined("EngineHandler")).get(name);
+        this.engine = Sierra.getHandlerManager().getEngineHandler().get(name);
     }
 
     public SierraWorld getSierraWorld() {

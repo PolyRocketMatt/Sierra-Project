@@ -2,6 +2,12 @@ package com.github.itheos.sierra.assets;
 
 /**
  * Created by PolyRocketMatt on 15/03/2021.
+ *
+ * Java POJO to support Jackson's JSON mapping
+ * onto Java classes. This POJO is specifically
+ * made to store material- and block-data for
+ * a single block in an asset when pulled from
+ * the database.
  */
 
 public class SierraBlock {

@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 
 /**
  * Created by PolyRocketMatt on 15/03/2021.
+ *
+ * Handler that processes assets.
  */
 
 public class AssetHandler extends Handler {

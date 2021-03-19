@@ -6,6 +6,11 @@ import java.util.Random;
 
 import static java.lang.Float.NaN;
 
+/**
+ * Lode's Class
+ */
+=======
+  
 public class ProceduralRock {
 
     private static void removeAllDirections(int[][][] rock, int size, float erosionLvl, Random rand){
