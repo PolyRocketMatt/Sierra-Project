@@ -146,6 +146,9 @@ public class MathUtils {
      * @return the square root
      */
     public static float sqrt(float value) {
+        if (value < 0.0f)
+            return 0.0f;
+
         if(value == 0)
             return 0;
 
