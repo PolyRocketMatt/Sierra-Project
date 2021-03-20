@@ -99,17 +99,16 @@ public class WheatFieldBiome extends SierraBiome {
                     data.setBlock(oX, oY, oZ, Bukkit.createBlockData(assetData.getData()));
                 }
             }
-        } else if (random.nextInt(10000) >= 9900) {
-            int size = random.nextInt(5);
-            size = 5;
+        } else if (random.nextInt(10000) >= 9970) {
+            int size = random.nextInt(10);
             if (x > 1 && z > 1 && x + size < 15 && z + size < 15) {
-                int[][][] rock = ProceduralRock.generate(size, 0.1f);
+                int[][][] rock = ProceduralRock.newRock(size,0.1f);
 
                 for (int i = 0; i < rock.length; i++) {
                     for (int j = 0; j < rock[0].length; j++) {
                         for (int k = 0; k < rock[0][0].length; k++) {
                             if (rock[i][j][k] == 1)
-                                data.setBlock(x + i, y + k, z + j, Material.STONE);
+                                data.setBlock(x + i, y + k + 2, z + j, Material.STONE);
                         }
                     }
                 }
