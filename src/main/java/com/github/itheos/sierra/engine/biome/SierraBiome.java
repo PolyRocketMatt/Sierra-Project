@@ -4,12 +4,10 @@ import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.generator.biome.BiomeGenerator;
-import com.github.itheos.sierra.engine.generator.climate.PrecipitationGenerator;
-import com.github.itheos.sierra.engine.generator.climate.TemperatureGenerator;
-import com.github.itheos.sierra.engine.generator.climate.WindGenerator;
 import com.github.itheos.sierra.exception.BiomeException;
 import com.github.itheos.sierra.exception.SierraException;
 import com.github.itheos.sierra.handlers.AssetHandler;
+import com.github.itheos.sierra.math.Range;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.ArrayList;
@@ -171,5 +169,5 @@ public abstract class SierraBiome {
      * @return the map containing the keys associated with this biome and the biome mapped to these keys
      * @throws BiomeException if no biome is defined
      */
-    public static <T extends SierraBiome> Map<String, SierraBiome> register(T instance, Map<String, SierraBiome> biomeMap) throws BiomeException  { throw new BiomeException("Cannot register abstract biome"); }
+    public static <T extends SierraBiome> void register(T instance, Map<String, SierraBiome> biomeMap) throws BiomeException  { throw new BiomeException("Cannot register abstract biome"); }
 }

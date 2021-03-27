@@ -32,16 +32,12 @@ public class LayeredController implements Controller {
     public LayeredController(SierraWorld world) {
         String key = StringUtils.toWorldsKey(world.getName());
 
-        System.out.println("Ok?");
-
         this.topographyController = new SimplexGenerator(world.getConfig().getAsInteger(key + ".seeds.controllers.topography"));
         this.wetnessController = new SimplexGenerator(world.getConfig().getAsInteger(key + ".seeds.controllers.wetness"));
         this.humidityController = new SimplexGenerator(world.getConfig().getAsInteger(key + ".seeds.controllers.humidity"));
         this.vegetationController = new SimplexGenerator(world.getConfig().getAsInteger(key + ".seeds.controllers.vegetation"));
 
         this.max = topographyController.trueMax(topographyController.getOctaves());
-
-        System.out.println("Init Layer");
     }
 
     /**

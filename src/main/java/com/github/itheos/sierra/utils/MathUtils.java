@@ -24,7 +24,7 @@ public class MathUtils {
 
     public static int fromSeedVolatile(int seed) { return seed % (seed / 10) * (seed % 2); }
 
-    public static int fromDoubleSeed(int s1, int s2) { return (s1 + s2) / (s1 % s2 == 0 ? s1 : (s1 % s2)); }
+    public static int fromDoubleSeed(int s1, int s2) { return (s1 + s2) / s1; }
 
     /**
      * SmoothStep function on value t using fifth-degree polynomial.

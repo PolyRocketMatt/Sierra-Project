@@ -85,8 +85,8 @@ public class FBM {
      */
     public static float compute(Noise noise, NoiseFilter filter, int octaves, Function<Float> scale, Function<Float> persistence, Function<Float> lacunarity,
                                 Function<Float> amplitude, Function<Float> frequency, float x, float z) {
-        float amp = amplitude.call();
-        float freq = frequency.call();
+        float amp = amplitude.call(1.0f);
+        float freq = frequency.call(1.0f);
         float value = 0.0f;
 
         for (int i = 0; i < octaves; i++) {
@@ -110,8 +110,8 @@ public class FBM {
      * @return the noise value computed with FBM
      */
     public float compute(float x, float z) {
-        float amp = amplitude.call();
-        float freq = frequency.call();
+        float amp = amplitude.call(1.0f);
+        float freq = frequency.call(1.0f);
         float value = 0.0f;
 
         for (int i = 0; i < octaves; i++) {

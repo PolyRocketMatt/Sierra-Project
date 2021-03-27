@@ -53,7 +53,6 @@ public class WindGenerator extends ClimateGenerator {
 
     @Override
     public float noise(float x, float z) {
-        //  Values between -1 and 1
         float qX = FBM.compute(primaryX, FBM.NoiseFilter.REGULAR, octaves, MathUtils.toFunction(scale), MathUtils.toFunction(persistence), MathUtils.toFunction(lacunarity),
                 MathUtils.toFunction(1.0f), MathUtils.toFunction(1.0f), x + offset, z + offset);
         float qZ = FBM.compute(primaryZ, FBM.NoiseFilter.REGULAR, octaves, MathUtils.toFunction(scale), MathUtils.toFunction(persistence), MathUtils.toFunction(lacunarity),
@@ -67,7 +66,7 @@ public class WindGenerator extends ClimateGenerator {
         float value = FBM.compute(noise, FBM.NoiseFilter.REGULAR, octaves, MathUtils.toFunction(scale), MathUtils.toFunction(persistence), MathUtils.toFunction(lacunarity),
                 MathUtils.toFunction(1.0f), MathUtils.toFunction(1.0f), x + warp * rX, z + warp * rZ);
 
-        return MathUtils.normalize(value, -max, max);
+        return MathUtils.normalize(-max, max, value);
     }
 
     @Override

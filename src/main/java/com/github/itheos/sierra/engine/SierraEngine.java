@@ -1,6 +1,7 @@
 package com.github.itheos.sierra.engine;
 
 import com.github.itheos.sierra.engine.biome.BiomeController;
+import com.github.itheos.sierra.engine.biome.SierraBiome;
 import com.github.itheos.sierra.engine.generator.ChunkSchema;
 import com.github.itheos.sierra.engine.generator.SierraChunkGenerator;
 import org.bukkit.Bukkit;
@@ -44,8 +45,19 @@ public class SierraEngine {
         //  Calculate base map
         float[][][] baseMap = world.getBaseGenerator().noise(new float[16][16], chunkX, chunkZ, 16, 16);
 
+        //  Calculate min-max range
+        float min = Float.MAX_VALUE, max = Float.MIN_VALUE;
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                if (min > baseMap[x][z][0]) min = baseMap[x][z][0];
+                if (max < baseMap[x][z][0]) max = baseMap[x][z][0];
+            }
+        }
+
+        float[] range = new float[] { min, max };
+
         //  Calculate biome mapping
-        BiomeController.BiomeType[][] biomeMap = world.getBiomeController().compute(chunkX, chunkZ);
+        BiomeController.BiomeType[][] biomeMap = world.getBiomeController().compute(baseMap, range, chunkX, chunkZ);
 
         //  Initialize the height-map
         int[][] heightMap = new int[16][16];
@@ -58,7 +70,7 @@ public class SierraEngine {
 
                 //  If a biome at the position has been found, increase the height-map according to the biome
                 if (biomeMap[x][z] != null)
-                    heightMap[x][z] += world.getBiomeController().getInstance(biomeMap[x][z]).computeBiome(chunkX, chunkZ, x, z, heightMap[x][z], baseMap[x][z][0]);
+                    heightMap[x][z] = world.getBiomeController().getInstance(biomeMap[x][z]).computeBiome(chunkX, chunkZ, x, z, heightMap[x][z], baseMap[x][z][0]);
             }
         }
 
@@ -80,6 +92,7 @@ public class SierraEngine {
         float[][][] baseMap = schema.getBaseMap();
         int[][] heightMap = schema.getHeightMap();
         BiomeController.BiomeType[][] biomeMap = schema.getBiomeMap();
+        SierraBiome biomeInstance;
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
@@ -87,11 +100,13 @@ public class SierraEngine {
                 int heightValue = heightMap[x][z];
                 BiomeController.BiomeType biome = biomeMap[x][z];
 
+                biomeInstance = world.getBiomeController().getInstance(biome);
                 if (biome != null) {
-                    data = world.getBiomeController().getInstance(biome).buildBiome(data, x, heightValue, z);
-                    data = world.getBiomeController().getInstance(biome).populate(data, x, heightValue, z);
-                } else
+                    data = biomeInstance.buildBiome(data, x, heightValue, z);
+                    data = biomeInstance.populate(data, x, heightValue, z);
+                } else {
                     data.setBlock(x, heightValue, z, Material.GRASS_BLOCK);
+                }
             }
         }
 

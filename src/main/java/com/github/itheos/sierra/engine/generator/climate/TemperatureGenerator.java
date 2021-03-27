@@ -55,7 +55,7 @@ public class TemperatureGenerator extends ClimateGenerator {
 
     @Override
     public float noise(float x, float z) {
-        return (fbm.compute(x, z) + distortionFbm.compute(x, z) / 2.0f);
+        return (MathUtils.normalize(-2.0f * max, max, fbm.compute(x, z) + distortionFbm.compute(x, z)) / 2.0f);
     }
 
     @Override

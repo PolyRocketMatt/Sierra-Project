@@ -34,6 +34,17 @@ public class Range {
     }
 
     /**
+     * Check to see if a given range is within range of the boundaries.
+     *
+     * @param range the range to be checked
+     * @return true if the given range is within the range of the boundaries
+     */
+    public boolean isInRange(float[] range) {
+        return !(range[0] < min) && !(range[0] > max) &&
+                !(range[1] < min) && !(range[1] > max);
+    }
+
+    /**
      * Create a new range.
      *
      * @param min the minimum boundary

@@ -36,20 +36,14 @@ public class ClimateController implements Controller {
 
         String key = StringUtils.toWorldsKey(parent.getName());
 
-        try {
-            this.temperatureGenerator = new TemperatureGenerator(
-                    parent.getConfig().getAsInteger( key + ".seeds.climate.temperature"));
-            this.windGenerator = new WindGenerator(
-                    parent.getConfig().getAsInteger(key + ".seeds.climate.wind"),
-                    parent.getConfig().getAsInteger(key + ".seeds.climate.wind-direction"),
-                    parent.getConfig().getAsInteger(key + ".seeds.climate.wind-offset"));
-            this.precipitationGenerator = new PrecipitationGenerator(
-                    parent.getConfig().getAsInteger(key + ".seeds.climate.precipitation"));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        System.out.println("Init Climate");
+        this.temperatureGenerator = new TemperatureGenerator(
+                parent.getConfig().getAsInteger( key + ".seeds.climate.temperature"));
+        this.windGenerator = new WindGenerator(
+                parent.getConfig().getAsInteger(key + ".seeds.climate.wind"),
+                parent.getConfig().getAsInteger(key + ".seeds.climate.wind-direction"),
+                parent.getConfig().getAsInteger(key + ".seeds.climate.wind-offset"));
+        this.precipitationGenerator = new PrecipitationGenerator(
+                parent.getConfig().getAsInteger(key + ".seeds.climate.precipitation"));
     }
 
     /**
@@ -81,7 +75,7 @@ public class ClimateController implements Controller {
 
     @Override
     public BiomeControlFactor[][][] compute(int chunkX, int chunkZ) {
-        BiomeControlFactor[][][] map = new BiomeControlFactor[16][16][4];
+        BiomeControlFactor[][][] map = new BiomeControlFactor[16][16][3];
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {

@@ -1,6 +1,5 @@
 package com.github.itheos.sierra.engine.biome.types;
 
-import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.assets.PlaceableAsset;
 import com.github.itheos.sierra.engine.SierraWorld;
 import com.github.itheos.sierra.engine.biome.BiomeController;
@@ -8,6 +7,7 @@ import com.github.itheos.sierra.engine.biome.ControlFactors;
 import com.github.itheos.sierra.engine.biome.SierraBiome;
 import com.github.itheos.sierra.engine.generator.ProceduralRock;
 import com.github.itheos.sierra.engine.generator.biome.WheatFieldGenerator;
+import com.github.itheos.sierra.math.Range;
 import com.github.itheos.sierra.utils.MathUtils;
 import com.github.itheos.sierra.utils.StringUtils;
 import org.bukkit.Bukkit;
@@ -49,7 +49,7 @@ public class WheatFieldBiome extends SierraBiome {
         float value = MathUtils.sigmoid(-0.60f, 0.0f, 14.0f, 1.0f, generator.noise(cX + x, cZ + z));
 
         //  Calculate influence value
-        float influence = MathUtils.normalize(0.98f, 1.0f, baseValue);
+        float influence = MathUtils.normalize(0.8992739613f, 1.0f, baseValue);
         float finalValue = influence * value;
 
         //  Multiply actual value with the influence and the multiplier
@@ -59,14 +59,14 @@ public class WheatFieldBiome extends SierraBiome {
     //  TODO: Make biomes 3D
     @Override
     public ChunkGenerator.ChunkData buildBiome(ChunkGenerator.ChunkData data, int x, int y, int z) {
-        data.setBlock(x, y + 1, z, Material.WHEAT);
         data.setBlock(x, y, z, Material.FARMLAND);
+        data.setBlock(x, y + 1, z, Material.WHEAT);
         data.setBlock(x, 0, z, Material.BEDROCK);
 
-        for (int offsetY = y - 1; offsetY >= 66; offsetY--)
+        for (int offsetY = y - 1; offsetY >= y - 5; offsetY--)
             data.setBlock(x, offsetY, z, Material.DIRT);
 
-        for (int offsetY = 65; offsetY >= 1; offsetY--)
+        for (int offsetY = y - 6; offsetY >= 1; offsetY--)
             data.setBlock(x, offsetY, z, Material.STONE);
 
         if (data.getBlockData(x, y + 1, z) instanceof Ageable) {
@@ -89,8 +89,8 @@ public class WheatFieldBiome extends SierraBiome {
             //  Check if all blocks of the asset fit
             boolean fit = true;
             for (PlaceableAsset.AssetData assetData : asset.getData()) {
-                if (assetData.getOffsetX() < 0 || assetData.getOffsetX() > 15 ||
-                        assetData.getOffsetZ() < 0 || assetData.getOffsetZ() > 15) {
+                if (x + assetData.getOffsetX() < 0 || x + assetData.getOffsetX() > 15 ||
+                        z + assetData.getOffsetZ() < 0 || z + assetData.getOffsetZ() > 15) {
                     fit = false;
 
                     break;
@@ -133,7 +133,7 @@ public class WheatFieldBiome extends SierraBiome {
     }
 
     public static ControlFactors.TemperatureLevel[] getTemperatureLevels() {
-        return new ControlFactors.TemperatureLevel[] { ControlFactors.TemperatureLevel.LUKEWARM, ControlFactors.TemperatureLevel.HOT };
+        return new ControlFactors.TemperatureLevel[] { ControlFactors.TemperatureLevel.LUKEWARM };
     }
 
     public static ControlFactors.WindLevel[] getWindLevels() {
@@ -141,7 +141,7 @@ public class WheatFieldBiome extends SierraBiome {
     }
 
     public static ControlFactors.PrecipitationLevel[] getPrecipitationLevels() {
-        return new ControlFactors.PrecipitationLevel[] { ControlFactors.PrecipitationLevel.DRY, ControlFactors.PrecipitationLevel.REGULAR_WET };
+        return new ControlFactors.PrecipitationLevel[] { ControlFactors.PrecipitationLevel.DRY, ControlFactors.PrecipitationLevel.REGULAR_WET};
     }
 
     public static ControlFactors.TopographyLevel[] getTopographyLevels() {
@@ -149,7 +149,7 @@ public class WheatFieldBiome extends SierraBiome {
     }
 
     public static ControlFactors.WetnessLevel[] getWetnessLevels() {
-        return new ControlFactors.WetnessLevel[] { ControlFactors.WetnessLevel.DRY };
+        return new ControlFactors.WetnessLevel[] { ControlFactors.WetnessLevel.DRY, ControlFactors.WetnessLevel.WET };
     }
 
     public static ControlFactors.HumidityLevel[] getHumidityLevels() {
@@ -160,10 +160,9 @@ public class WheatFieldBiome extends SierraBiome {
         return new ControlFactors.VegetationLevel[] { ControlFactors.VegetationLevel.SOME };
     }
 
-    public static <T extends SierraBiome> Map<String, SierraBiome> register(T instance, Map<String, SierraBiome> biomeMap) {
+    public static <T extends SierraBiome> void register(T instance, Map<String, SierraBiome> biomeMap) {
         for (String key : getKeys())
             biomeMap.put(key, instance);
-        return biomeMap;
     }
 
 }

@@ -1,9 +1,12 @@
 package com.github.itheos.sierra.engine.biome;
 
 import com.github.itheos.sierra.engine.SierraWorld;
+import com.github.itheos.sierra.engine.biome.types.BeachBiome;
 import com.github.itheos.sierra.engine.biome.types.WheatFieldBiome;
-import com.github.itheos.sierra.utils.ArrayUtils;
+import com.github.itheos.sierra.math.Range;
+import com.github.itheos.sierra.utils.ArrayMapUtils;
 import com.github.itheos.sierra.utils.StringUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.block.Biome;
 
 import java.util.HashMap;
@@ -23,11 +26,12 @@ public class BiomeController {
      * built-in biome in Spigot.
      */
     public enum BiomeType {
-        FOREST("forest", Biome.PLAINS),
-        BIRCH_FOREST("birch_forest", Biome.PLAINS),
-        PLAINS("plains", Biome.PLAINS),
-        TAIGA("taiga", Biome.PLAINS),
-        WHEAT_FIELDS("wheat_field", Biome.PLAINS);
+        BEACH("beach", Biome.BEACH, Range.of(0.901408f, 0.957746f)),
+        FOREST("forest", Biome.PLAINS, Range.of(0.0f, 0.0f)),
+        BIRCH_FOREST("birch_forest", Biome.PLAINS, Range.of(0.0f, 0.0f)),
+        PLAINS("plains", Biome.PLAINS, Range.of(0.0f, 0.0f)),
+        TAIGA("taiga", Biome.PLAINS, Range.of(0.0f, 0.0f)),
+        WHEAT_FIELDS("wheat_field", Biome.PLAINS, Range.of(0.985915f, 1.0f));
 
         /** The name of the biome in Sierra. */
         private String name;
@@ -35,15 +39,19 @@ public class BiomeController {
         /** The Minecraft biome this biome can represent. */
         private Biome biome;
 
+        /** The range of base values this biome can generate in. */
+        private Range range;
+
         /**
          * Initialize a new BiomeType.
          *
          * @param name the name
          * @param biome the Minecraft biome
          */
-        BiomeType(String name, Biome biome) {
+        BiomeType(String name, Biome biome, Range range) {
             this.name = name;
             this.biome = biome;
+            this.range = range;
         }
 
         /**
@@ -63,6 +71,13 @@ public class BiomeController {
         public Biome getBiome() {
             return biome;
         }
+
+        /**
+         * Get the range this biome can generate in.
+         *
+         * @return the range
+         */
+        public Range getRange() { return range; }
 
         /**
          * Get a BiomeType from a given key.
@@ -97,12 +112,8 @@ public class BiomeController {
         this.biomeKeyMap = new HashMap<>();
         this.biomeTypeMap = new HashMap<>();
 
-        System.out.println("Ok?");
-
         loadKeyMap();
         loadTypeMap();
-
-        System.out.println("Init Biome");
     }
 
     /**
@@ -110,6 +121,7 @@ public class BiomeController {
      */
     private void loadKeyMap() {
         WheatFieldBiome.register(new WheatFieldBiome(parent), biomeKeyMap);
+        BeachBiome.register(new BeachBiome(parent), biomeKeyMap);
     }
 
     /**
@@ -121,19 +133,25 @@ public class BiomeController {
             biomeTypeMap.put(key.biome, key);
     }
 
-    public BiomeType[][] compute(int chunkX, int chunkZ) {
+    public BiomeType[][] compute(float[][][] baseMap, float[] range, int chunkX, int chunkZ) {
+        //  Compute biomes so that all biomes lie within a min-max range
+        Map<String, SierraBiome> calculatedBiomeMap = ArrayMapUtils.trim(range, biomeKeyMap);
+
+        //  Compute factors
         BiomeType[][] types = new BiomeType[16][16];
         BiomeControlFactor[][][] climate = parent.getClimateController().compute(chunkX, chunkZ);
         BiomeControlFactor[][][] factors = parent.getLayeredController().compute(chunkX, chunkZ);
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                BiomeControlFactor[] controlFactors = ArrayUtils.mergeFactors(climate[x][z], factors[x][z]);
+                BiomeControlFactor[] controlFactors = ArrayMapUtils.mergeFactors(climate[x][z], factors[x][z]);
                 String key = StringUtils.generateKey(controlFactors);
 
-                //  Find match
+                //  Find match within trimmed map
                 //  TODO: Find a default biome
-                types[x][z] = biomeKeyMap.getOrDefault(key, null).getBiome();
+                SierraBiome biome = calculatedBiomeMap.getOrDefault(key, null);
+
+                types[x][z] = (biome == null) ? null : biome.getBiome();
             }
         }
 
