@@ -124,6 +124,8 @@ public class HandlerManager implements Loggable {
         return Objects.requireNonNull(getAsPredefined("AssetHandler"));
     }
 
+    public ChunkHandler getChunkHandler() { return Objects.requireNonNull(getAsPredefined("ChunkHandler")); }
+
     public EngineHandler getEngineHandler() {
         return Objects.requireNonNull(getAsPredefined("EngineHandler"));
     }

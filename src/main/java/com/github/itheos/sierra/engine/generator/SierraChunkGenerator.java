@@ -3,6 +3,7 @@ package com.github.itheos.sierra.engine.generator;
 import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.engine.SierraEngine;
 import com.github.itheos.sierra.engine.SierraWorld;
+import com.github.itheos.sierra.engine.chunk.LocalityChunk;
 import com.github.itheos.sierra.handlers.EngineHandler;
 import com.github.itheos.sierra.handlers.GeneratorHandler;
 import com.github.itheos.sierra.utils.WorldUtils;

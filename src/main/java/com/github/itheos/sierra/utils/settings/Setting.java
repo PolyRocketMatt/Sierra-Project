@@ -8,6 +8,10 @@ import com.github.itheos.sierra.utils.KeyValuePair;
 
 public enum Setting {
 
+    //  Locality Settings
+    LOCALITY_SIZE(new KeyValuePair<>("generators.locality.size", 512)),
+    LOCALITY_PRE_LOAD(new KeyValuePair<>("generators.locality.pre-load", 10)),
+
     //  Base Generator Settings
     BASE_MULTIPLIER(new KeyValuePair<>("generators.base.multiplier", 71)),
     BASE_OCTAVES(new KeyValuePair<>("generators.base.octaves", 8)),

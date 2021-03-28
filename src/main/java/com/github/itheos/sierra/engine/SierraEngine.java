@@ -1,7 +1,9 @@
 package com.github.itheos.sierra.engine;
 
+import com.github.itheos.sierra.Sierra;
 import com.github.itheos.sierra.engine.biome.BiomeController;
 import com.github.itheos.sierra.engine.biome.SierraBiome;
+import com.github.itheos.sierra.engine.chunk.LocalityChunk;
 import com.github.itheos.sierra.engine.generator.ChunkSchema;
 import com.github.itheos.sierra.engine.generator.SierraChunkGenerator;
 import org.bukkit.Bukkit;
@@ -37,13 +39,15 @@ public class SierraEngine {
     /**
      * Create a new ChunkSchema for given chunk coordinates.
      *
+     * @param locality the locality the given chunk is located in
      * @param chunkX the x coordinate of the chunk
      * @param chunkZ the z coordinate of the chunk
      * @return a ChunkSchema generated for this chunk
      */
-    public ChunkSchema getChunkSchema(int chunkX, int chunkZ) {
+    public ChunkSchema getChunkSchema(LocalityChunk locality, int chunkX, int chunkZ) {
         //  Calculate base map
-        float[][][] baseMap = world.getBaseGenerator().noise(new float[16][16], chunkX, chunkZ, 16, 16);
+        int[] offsetCoordinates = Sierra.getHandlerManager().getChunkHandler().toLocalityCoordinates(chunkX, chunkZ);
+        float[][][] baseMap = locality.sample(offsetCoordinates[0], offsetCoordinates[1]);
 
         //  Calculate min-max range
         float min = Float.MAX_VALUE, max = Float.MIN_VALUE;
@@ -111,51 +115,6 @@ public class SierraEngine {
         }
 
         return data;
-
-        /*
-        float[][][] base = schema.getBase();
-        int[][] heightMap = schema.getHeightMap();
-
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                float value = base[x][z][0];
-                int y = heightMap[x][z];
-
-                //  TODO: Biome Logic Here
-                if (value >= 0.98f) {
-                    data = world.getWheatFieldBiome().buildBiome(data, x, y, z);
-                    data = world.getWheatFieldBiome().populate(data, x, y, z);
-                } else {
-                    data.setBlock(x, 0, z, Material.BEDROCK);
-
-                    if (y > 64) {
-                        data.setBlock(x, y, z, Material.GRASS_BLOCK);
-                        grid.setBiome(x, y, z, Biome.PLAINS);
-
-                        for (int i = 1; i <= 4; i++)
-                            data.setBlock(x, y - i, z, Material.DIRT);
-                        for (int offsetY = 1; offsetY < y - 4; offsetY++)
-                            data.setBlock(x, offsetY, z, Material.STONE);
-                    } else {
-                        data.setBlock(x, y, z, Material.SAND);
-                        grid.setBiome(x, y, z, Biome.OCEAN);
-
-                        for (int i = 1; i <= 4; i++)
-                            data.setBlock(x, y - i, z, Material.SAND);
-                        for (int offsetY = 1; offsetY < y - 4; offsetY++)
-                            data.setBlock(x, offsetY, z, Material.STONE);
-
-                        if (y < 60) {
-                            for (int offsetY = 60; offsetY > y; offsetY--)
-                                data.setBlock(x, offsetY, z, Material.WATER);
-                        }
-                    }
-                }
-            }
-        }
-
-        return data;
-        */
     }
 
     /**
@@ -171,9 +130,16 @@ public class SierraEngine {
     public ChunkGenerator.ChunkData getChunkData(World world, SierraWorld sierraWorld, int cX, int cZ, ChunkGenerator.BiomeGrid grid) {
         int chunkX = cX * 16, chunkZ = cZ * 16;
 
-        ChunkGenerator.ChunkData data = Bukkit.createChunkData(world);
-        ChunkSchema schema = getChunkSchema(chunkX, chunkZ);
+        //  Get the locality
+        LocalityChunk locality = Sierra.getHandlerManager().getChunkHandler().getLocality(sierraWorld, cX, cZ);
 
+        //  Generate chunk data
+        ChunkGenerator.ChunkData data = Bukkit.createChunkData(world);
+
+        //  Build Chunk schema
+        ChunkSchema schema = getChunkSchema(locality, chunkX, chunkZ);
+
+        //  Return the data build from the schema
         return buildFromSchema(data, schema, grid, chunkX, chunkZ);
     }
 

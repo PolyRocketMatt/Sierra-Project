@@ -7,6 +7,8 @@ import com.github.itheos.sierra.engine.biome.LayeredController;
 import com.github.itheos.sierra.engine.climate.ClimateController;
 import com.github.itheos.sierra.engine.generator.general.BaseGenerator;
 
+import java.util.Objects;
+
 /**
  * Created by PolyRocketMatt on 12/03/2021.
  *
@@ -98,4 +100,13 @@ public class SierraWorld {
         return layeredController;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+
+        SierraWorld that = (SierraWorld) other;
+
+        return that.getName().equalsIgnoreCase(name);
+    }
 }

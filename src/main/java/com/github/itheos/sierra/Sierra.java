@@ -3,6 +3,7 @@ package com.github.itheos.sierra;
 import com.github.itheos.sierra.command.DebugCommand;
 import com.github.itheos.sierra.command.SierraCommand;
 import com.github.itheos.sierra.engine.generator.SierraChunkGenerator;
+import com.github.itheos.sierra.exception.HandlerException;
 import com.github.itheos.sierra.handlers.*;
 import com.github.itheos.sierra.handlers.handles.JSONHandle;
 import com.github.itheos.sierra.handlers.handles.PluginCommandHandle;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -118,6 +120,7 @@ public class Sierra extends JavaPlugin {
         // Objects.requireNonNull(command).setTabCompleter(new TabHandler(commandHandle));
 
         //  Initialize other handlers
+        new ChunkHandler();
         new GuiHandler();
         new EventHandler();
         new PlayerHandler();
@@ -145,6 +148,13 @@ public class Sierra extends JavaPlugin {
     }
 
     private void performShutdownCheck() {
+        List<Handler> handlerList = handlerManager.getActiveHandlers();
+
+        handlerList.forEach(handler -> {
+            try {
+                handlerManager.remove(handler);
+            } catch (HandlerException ignored) {}
+        });
 
         //  Disable the logger
         logger.close();
